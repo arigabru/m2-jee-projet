@@ -2,15 +2,12 @@ import { TextField, Typography } from "@mui/material";
 import React from "react";
 import { AppBar } from "@mui/material";
 import { Grid } from "@mui/material";
-import { FormGroup } from "@mui/material";
 import { Box } from "@mui/material";
 import { Paper } from "@mui/material";
 import { Divider } from "@mui/material";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { Control } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 
 export default function InscriptionPage() {
 
@@ -100,7 +97,7 @@ export default function InscriptionPage() {
                                         </Grid>
                                         <Divider></Divider>
                                         <Grid container  alignItems="Center">
-                                            <Button variant="Contained" sx={{ mt: 2, ml:2}} 
+                                            <Button variant="Contained" sx={{ mt: 2, ml:4}} 
                                             style={{
                                             backgroundColor: "#8cb9e6",
                                             color:"white",
