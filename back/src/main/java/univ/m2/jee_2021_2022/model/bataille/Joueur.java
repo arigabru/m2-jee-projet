@@ -1,29 +1,21 @@
 package univ.m2.jee_2021_2022.model.bataille;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Joueur {
 
     private String pseudo;
-    private List<Carte> deck;
+    private Paquet deck;
 
     public Joueur(String pseudo) {
         this.pseudo = pseudo;
-        this.deck = new ArrayList<>();
-    }
-
-    public Joueur(String pseudo, ArrayList<Carte> deck) {
-        this.pseudo = pseudo;
-        this.deck = deck;
+        this.deck = new Paquet();
     }
 
     public void ajouterCarte(Carte carte) {
-        this.deck.add(carte);
+        this.deck.ajouterCarter(carte);
     }
 
     public Carte retirerCarte() {
-        return this.deck.remove(0);
+        return this.deck.tirerCarte();
     }
 
     public String getPseudo() {
@@ -34,11 +26,11 @@ public class Joueur {
         this.pseudo = pseudo;
     }
 
-    public List<Carte> getDeck() {
-        return deck;
+    public Paquet getDeck() {
+        return this.deck;
     }
 
-    public void setDeck(List<Carte> deck) {
+    public void setDeck(Paquet deck) {
         this.deck = deck;
     }
 }

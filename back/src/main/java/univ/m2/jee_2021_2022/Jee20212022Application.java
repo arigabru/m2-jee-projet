@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import univ.m2.jee_2021_2022.model.bataille.Carte;
 import univ.m2.jee_2021_2022.model.bataille.Couleur;
-import univ.m2.jee_2021_2022.model.bataille.Joueur;
 import univ.m2.jee_2021_2022.model.bataille.Valeur;
 import univ.m2.jee_2021_2022.service.CarteService;
 import univ.m2.jee_2021_2022.service.JoueurService;

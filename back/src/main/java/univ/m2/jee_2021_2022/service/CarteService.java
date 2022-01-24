@@ -1,11 +1,8 @@
 package univ.m2.jee_2021_2022.service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import univ.m2.jee_2021_2022.model.bataille.Carte;
