@@ -13,7 +13,7 @@ public class Joueur {
         this.deck = new ArrayList<>();
     }
 
-    public Joueur(String pseudo, List deck) {
+    public Joueur(String pseudo, ArrayList<Carte> deck) {
         this.pseudo = pseudo;
         this.deck = deck;
     }

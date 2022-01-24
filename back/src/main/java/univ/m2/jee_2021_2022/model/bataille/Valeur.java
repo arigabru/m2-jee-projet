@@ -20,4 +20,10 @@ public enum Valeur {
     Valeur(int valeur) {
         this.valeur = valeur;
     }
+
+    public int comparer(Valeur v) {
+        if (this.valeur < v.valeur) return -1;
+        if (this.valeur > v.valeur) return 1;
+        return 0;
+    }
 }

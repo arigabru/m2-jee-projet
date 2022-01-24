@@ -25,4 +25,8 @@ public class Carte {
     public void setCouleur(Couleur couleur) {
         this.couleur = couleur;
     }
+
+    public String toString() {
+        return this.valeur + " de " + this.couleur;
+    }
 }
