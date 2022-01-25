@@ -13,26 +13,26 @@ import univ.m2.jee_2021_2022.model.bataille.Valeur;
 import univ.m2.jee_2021_2022.service.CarteService;
 
 @SpringBootApplication
-public class Jee20212022Application implements CommandLineRunner {
+public class Jee20212022Application /*implements CommandLineRunner*/ {
 
-	@Autowired
-	private CarteService carteService;
+	// @Autowired
+	// private CarteService carteService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Jee20212022Application.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		ArrayList<Carte> alCarte = carteService.getPaquet();
+	// @Override
+	// public void run(String... args) throws Exception {
+	// 	ArrayList<Carte> alCarte = carteService.getPaquet();
 
-		for (Carte c : alCarte) {
-			System.out.println(c);
-		}
+	// 	for (Carte c : alCarte) {
+	// 		System.out.println(c);
+	// 	}
 
-		Carte c1 = new Carte(Valeur.SEPT, Couleur.CARREAU);
-		Carte c2 = new Carte(Valeur.VALET, Couleur.TREFLE);
-		System.out.println(carteService.comparerCarte(c1, c2));
-	}
+	// 	Carte c1 = new Carte(Valeur.SEPT, Couleur.CARREAU);
+	// 	Carte c2 = new Carte(Valeur.VALET, Couleur.TREFLE);
+	// 	System.out.println(carteService.comparerCarte(c1, c2));
+	// }
 
 }
