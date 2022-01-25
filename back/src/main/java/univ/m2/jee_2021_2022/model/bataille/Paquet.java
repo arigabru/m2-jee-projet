@@ -15,7 +15,11 @@ public class Paquet {
         return this.paquet;
     }
 
-    public void ajouterCarter(Carte c) {
+    public int size() {
+        return this.paquet.size();
+    }
+
+    public void ajouterCarte(Carte c) {
         this.paquet.add(c);
     }
 
