@@ -17,8 +17,8 @@ public class BatailleController {
     @Autowired
     private CarteService carteService;
 
-    @GetMapping("/bataille/paquet/{id}/carteRand")
-    public ResponseEntity<Carte> getCarteAleatoire(@RequestParam(value = "id") int id) {
+    @GetMapping("/bataille/paquet/carteRand")
+    public ResponseEntity<Carte> getCarteAleatoire() {
         // À finir quand la base sera faite
         return ResponseEntity.ok(new Carte(Valeur.AS, Couleur.PIQUE));
     }

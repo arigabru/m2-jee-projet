@@ -16,11 +16,16 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Icon } from '@mui/material';
 import { IconButton } from '@mui/material';
 
+
 export default function GameBoardPage() {
 
     const navigate = useNavigate();
     const goToPFC = () => {
         navigate('/pfc')
+    }
+
+    const goToWar = () => {
+        navigate('/war')
     }
 
     document.body.style.backgroundColor = "#d1deeb"
@@ -97,7 +102,7 @@ export default function GameBoardPage() {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button>Jouer</Button>
+                            <Button onClick={() =>{goToWar()}}>Jouer</Button>
                         </CardActions>
                         </Card>
 

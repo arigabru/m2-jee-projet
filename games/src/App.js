@@ -4,6 +4,7 @@ import ConnectPage from './Connexion/ConnectPage';
 import InscriptionPage from './Inscription/InscriptionPage';
 import GameBoardPage from './GameBoard/GameBoardPage';
 import RPS from './PFC/RPS';
+import WarPage from './war/WarPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/inscription" element={<InscriptionPage/>} />
         <Route path="/gameBoard" element={<GameBoardPage/>} />
         <Route path="/pfc" element={<RPS/>} />
+        <Route path="/war" element={<WarPage/>} />
       </Routes>
     </BrowserRouter>
     </div>
