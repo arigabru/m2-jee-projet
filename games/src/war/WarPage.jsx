@@ -4,7 +4,6 @@ import { AppBar } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/material";
 import { Button } from "@mui/material";
-import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -14,11 +13,18 @@ import { Icon } from '@mui/material';
 import { IconButton } from '@mui/material';
 import { axiosInterceptor } from '../actions/axiosInterceptor';
 import { getCard } from '../actions/warActions';
+import { useState } from "react";
 
 export default function WarPage() {
 
+    const [val, setVal] = useState("")
+    const [color, setColor] = useState("")
+
     const getRandCard = () => {
-        console.log(getCard().data)
+        getCard().then((response) => {
+            setVal(response.valeur)
+            setColor(response.couleur) 
+        } )
     }
 
     document.body.style.backgroundColor = "#d1deeb"
@@ -35,6 +41,8 @@ export default function WarPage() {
             <Button onClick={() =>{getRandCard()}}>
                 Jouer 
             </Button>
+            <Typography>Var : {val} couleur : {color}</Typography>
+            
         </>
     );
 

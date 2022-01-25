@@ -13,7 +13,7 @@ import univ.m2.jee_2021_2022.model.bataille.Couleur;
 import univ.m2.jee_2021_2022.model.bataille.Valeur;
 import univ.m2.jee_2021_2022.service.CarteService;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/bataille")
 public class BatailleController {
