@@ -18,7 +18,11 @@ public class BatailleController {
     private CarteService carteService;
 
     @GetMapping("/bataille/paquet/carteRand")
+<<<<<<< HEAD
     public ResponseEntity<Carte> getCarteAleatoire() {
+=======
+    public ResponseEntity<Carte> getCarteAleatoire(@RequestParam(value = "id") int id) {
+>>>>>>> 3d407b67efd537701e1bba8351f6e0fe84976699
         // À finir quand la base sera faite
         return ResponseEntity.ok(new Carte(Valeur.AS, Couleur.PIQUE));
     }
