@@ -1,4 +1,4 @@
-package univ.m2.jee_2021_2022.controller;
+package univ.m2.jee_2021_2022.bataille.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import univ.m2.jee_2021_2022.model.bataille.Carte;
-import univ.m2.jee_2021_2022.model.bataille.ResultatBataille;
-import univ.m2.jee_2021_2022.service.CarteService;
+import univ.m2.jee_2021_2022.bataille.models.Carte;
+import univ.m2.jee_2021_2022.bataille.models.ResultatBataille;
+import univ.m2.jee_2021_2022.bataille.services.CarteService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

@@ -1,13 +1,13 @@
-package univ.m2.jee_2021_2022.service;
+package univ.m2.jee_2021_2022.bataille.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import org.springframework.stereotype.Service;
 
-import univ.m2.jee_2021_2022.model.bataille.Carte;
-import univ.m2.jee_2021_2022.model.bataille.Couleur;
-import univ.m2.jee_2021_2022.model.bataille.Valeur;
+import univ.m2.jee_2021_2022.bataille.models.Carte;
+import univ.m2.jee_2021_2022.bataille.models.Couleur;
+import univ.m2.jee_2021_2022.bataille.models.Valeur;
 
 @Service
 public class CarteService {

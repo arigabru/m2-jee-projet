@@ -1,4 +1,4 @@
-package univ.m2.jee_2021_2022.model.bataille;
+package univ.m2.jee_2021_2022.bataille.models;
 
 public class Carte {
 

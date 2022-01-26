@@ -1,4 +1,4 @@
-package univ.m2.jee_2021_2022.security;
+package univ.m2.jee_2021_2022.authentication.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +12,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import univ.m2.jee_2021_2022.filters.JwtRequestFilter;
-import univ.m2.jee_2021_2022.service.MyUserDetailsService;
+import univ.m2.jee_2021_2022.authentication.filters.JwtRequestFilter;
+import univ.m2.jee_2021_2022.authentication.services.MyUserDetailsService;
 
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter{

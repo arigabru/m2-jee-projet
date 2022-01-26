@@ -1,12 +1,10 @@
-package univ.m2.jee_2021_2022.controller;
+package univ.m2.jee_2021_2022.authentication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import univ.m2.jee_2021_2022.model.authentication.AuthenticationRequest;
-import univ.m2.jee_2021_2022.model.authentication.AuthenticationResponse;
-import univ.m2.jee_2021_2022.service.MyUserDetailsService;
-import univ.m2.jee_2021_2022.util.JwtUtil;
+import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
+import univ.m2.jee_2021_2022.authentication.models.AuthenticationResponse;
+import univ.m2.jee_2021_2022.authentication.services.MyUserDetailsService;
+import univ.m2.jee_2021_2022.authentication.util.JwtUtil;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
