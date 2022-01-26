@@ -1,4 +1,4 @@
-package univ.m2.jee_2021_2022.filters;
+package univ.m2.jee_2021_2022.authentication.filters;
 
 import java.io.IOException;
 
@@ -15,8 +15,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import univ.m2.jee_2021_2022.service.MyUserDetailsService;
-import univ.m2.jee_2021_2022.util.JwtUtil;
+import univ.m2.jee_2021_2022.authentication.services.MyUserDetailsService;
+import univ.m2.jee_2021_2022.authentication.util.JwtUtil;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter{

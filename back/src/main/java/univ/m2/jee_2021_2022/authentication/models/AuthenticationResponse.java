@@ -1,4 +1,4 @@
-package univ.m2.jee_2021_2022.model;
+package univ.m2.jee_2021_2022.authentication.models;
 
 public class AuthenticationResponse {
     

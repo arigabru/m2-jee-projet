@@ -1,14 +1,17 @@
-package univ.m2.jee_2021_2022.model.bataille;
+package univ.m2.jee_2021_2022.bataille.models;
 
-public class ResultatRound {
+/**
+ * Constitue l'information envoyé au client
+ */
+public class ResultatBataille {
     private String carteJoueur;
     private String carteBot;
     private int rapport;
 
-    public ResultatRound(Carte carteJoueur, Carte carteBot) {
+    public ResultatBataille(Carte carteJoueur, Carte carteBot, int rapport) {
         this.carteJoueur = carteJoueur.getName();
         this.carteBot = carteBot.getName();
-        this.rapport = carteJoueur.getValeur().comparer(carteBot.getValeur());
+        this.rapport = rapport;
     }
 
     public String getCarteJoueur() {

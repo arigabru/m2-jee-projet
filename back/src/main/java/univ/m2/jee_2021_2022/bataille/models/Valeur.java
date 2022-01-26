@@ -1,7 +1,6 @@
-package univ.m2.jee_2021_2022.model.bataille;
+package univ.m2.jee_2021_2022.bataille.models;
 
 public enum Valeur {
-    AS(1, "A"),
     DEUX(2, "2"),
     TROIS(3, "3"),
     QUATRE(4, "4"),
@@ -13,7 +12,8 @@ public enum Valeur {
     DIX(10, "T"),
     VALET(11, "J"),
     DAME(12, "Q"),
-    ROI(13, "K");
+    ROI(13, "K"),
+    AS(14, "A");
 
     private int valeur;
     private String name;

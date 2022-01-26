@@ -1,4 +1,4 @@
-package univ.m2.jee_2021_2022.service;
+package univ.m2.jee_2021_2022.authentication.services;
 
 import java.util.ArrayList;
 

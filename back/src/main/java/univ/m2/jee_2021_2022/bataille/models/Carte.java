@@ -1,4 +1,4 @@
-package univ.m2.jee_2021_2022.model.bataille;
+package univ.m2.jee_2021_2022.bataille.models;
 
 public class Carte {
 
@@ -14,16 +14,8 @@ public class Carte {
         return valeur;
     }
 
-    public void setValeur(Valeur valeur) {
-        this.valeur = valeur;
-    }
-
     public Couleur getCouleur() {
         return couleur;
-    }
-
-    public void setCouleur(Couleur couleur) {
-        this.couleur = couleur;
     }
     
     public String getName() {
