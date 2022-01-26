@@ -12,18 +12,33 @@ import univ.m2.jee_2021_2022.model.bataille.Valeur;
 @Service
 public class CarteService {
 
-    public ArrayList<Carte> getPaquet() {
-        ArrayList<Carte> alCarte = new ArrayList<>();
+    private ArrayList<Carte> paquet;
+
+    public CarteService() {
+        paquet = new ArrayList<>();
         for (Valeur v : Valeur.values()) {
             for (Couleur c : Couleur.values()) {
-                alCarte.add(new Carte(v, c));
+                paquet.add(new Carte(v, c));
             }
         }
-        Collections.shuffle(alCarte);
-        return alCarte;
+        Collections.shuffle(paquet);
+    }
+
+    public void resetPaquet() {
+        paquet = new ArrayList<>();
+        for (Valeur v : Valeur.values()) {
+            for (Couleur c : Couleur.values()) {
+                paquet.add(new Carte(v, c));
+            }
+        }
+        Collections.shuffle(paquet);
+    }
+
+    public Carte tirerCarte() {
+        return this.paquet.remove(0);
     }
 
     public int comparerCarte(Carte c1, Carte c2) {
-        return (c1.getValeur().compareTo(c2.getValeur()));
+        return c1.getValeur().comparer(c2.getValeur());
     }
 }

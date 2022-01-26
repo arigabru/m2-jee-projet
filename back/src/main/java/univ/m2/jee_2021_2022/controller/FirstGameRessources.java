@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import univ.m2.jee_2021_2022.model.AuthenticationRequest;
-import univ.m2.jee_2021_2022.model.AuthenticationResponse;
+import univ.m2.jee_2021_2022.model.authentication.AuthenticationRequest;
+import univ.m2.jee_2021_2022.model.authentication.AuthenticationResponse;
 import univ.m2.jee_2021_2022.service.MyUserDetailsService;
 import univ.m2.jee_2021_2022.util.JwtUtil;
 
