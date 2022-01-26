@@ -15,6 +15,12 @@ import { axiosInterceptor } from '../actions/axiosInterceptor';
 import { getCard } from '../actions/warActions';
 import { useState } from "react";
 import Card from "react-free-playing-cards/lib/TcN"
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import TextField from '@mui/material/TextField';
 
 
 export default function WarPage() {
@@ -25,11 +31,74 @@ export default function WarPage() {
     const [playerCard, setPlayerCard] = useState("Ts")
     const [botCard, setBotCard] = useState("Ts")
     const [isBacked, setBack] = useState(true)
+    const [roundWinner, setRoundWinner] = useState(null)
+    const [roundWon, setRoundWon] = useState(0)
+    const [roundLost, setRoundLost] = useState(0)
+    const [nbRounds, setnbRounds] = useState(5)
+    const [tempRound, setTempRound] = useState(0)
+    const [currentRound, setCurrentRound] = useState(0)
+    const [dialogOpen, setOpen] = useState(true)
+    const [dialogEndGameOpen, setDialogEndGameOpen] = useState(false)
+    const [winner, setWinner] = useState(null)
+    const [gameButtonLabel, setGameButtonLabel] = useState("Jouer")
+    
+
+    const handleClose = () => {
+        setOpen(false);
+        setDialogEndGameOpen(false)
+        
+    };
+
+    const restartGame = () => {
+        handleClose()
+        setnbRounds(tempRound)
+    }
+
+    const fromEndToRestart = () => {
+        handleClose()
+        setOpen(true)
+    }
+
+    const endGame = () => {
+        if(roundWon > roundLost){
+            setWinner(" Joueur ")
+        }
+        if(roundWon < roundLost){
+            setWinner(" Ordinateur ")
+        }
+        if(roundWon === roundLost){
+            setWinner(" Egalité ")
+        }
+        setGameButtonLabel("Jouer")
+    }
 
     const getRandCard = () => {
+        setBack(false)
         getCard().then((response) => {
-            setVal(response.valeur)
-            setColor(response.couleur) 
+            setPlayerCard(response.carteJoueur)
+            setBotCard(response.carteBot) 
+
+            setCurrentRound(currentRound+1)
+
+            if(response.rapport === 1){
+                setRoundWinner("Joueur")
+                setRoundWon(roundWon+1)
+            }
+            if(response.rapport === -1){
+                setRoundWinner("Bot")
+                setRoundLost(roundLost+1)
+            }
+            if(response.rapport === 0){
+                setRoundWinner("Egalite")
+            }
+            
+            if(currentRound == nbRounds){
+                setGameButtonLabel("Fin de partie")
+                setCurrentRound(0)
+                setDialogEndGameOpen(true)
+                endGame()
+            }
+            
         })
     }
 
@@ -44,12 +113,127 @@ export default function WarPage() {
                 </Grid>
             </AppBar>
             
-            <Button onClick={() =>{getRandCard()}}>
-                Jouer 
-            </Button>
-            <Typography>Var : {val} couleur : {color}</Typography>
-            <Card card={playerCard} height="200px" back={isBacked}></Card>
-            <Card card={botCard} height="200px" back={isBacked}></Card>
+            <Box sx={{ pt: 10 }} >
+            <Grid container>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={3}>
+                        <Typography variant="h5"> Joueur </Typography>
+                    </Grid>
+                    <Grid item md={3}>
+                        <Typography variant="h5"> Ordinateur </Typography>
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={3}>
+                        <Card card={playerCard} height="200px" back={isBacked}></Card>
+                    </Grid>
+                    <Grid item md={3}>
+                        <Card card={botCard} height="200px" back={isBacked}></Card>
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Button variant="contained" onClick={() =>{getRandCard()}}>
+                            {gameButtonLabel} 
+                        </Button>                    
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{pt:5}}>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Typography variant="h4"> Gagnant de la manche : {roundWinner}</Typography>                 
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{pt:5}}>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Typography variant="h6"> Nombre de manches remportées par le joueur : {roundWon}</Typography>   
+                        <Typography variant="h6"> Nombre de manches remportées par l'ordinateur : {roundLost}</Typography>                
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{pt:5}}>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Typography variant="h6"> Manche : {currentRound}/{nbRounds}</Typography>                 
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Button variant="contained" onClick={() =>{setOpen(true)}}>
+                            Relancer
+                        </Button>                    
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+            </Box>
+
+            <Dialog open={dialogOpen} onClose={handleClose}>
+                <DialogTitle>Rejouer</DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                    Entrez le nombre de manches que vous souhaitez jouer
+                </DialogContentText>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="nbRounds"
+                    label="Nombre de manches"
+                    type="number"
+                    fullWidth
+                    variant="standard"
+                    onChange={(event) => setTempRound(event.target.value)} 
+                />
+                
+                </DialogContent>
+                <DialogActions>
+                <Button variant="contained" onClick={() =>{restartGame()}}>
+                    Jouer
+                </Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog open={dialogEndGameOpen} onClose={handleClose}>
+                <DialogTitle>Fin de partie</DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                    Le gagnant est : {winner}
+                </DialogContentText>                
+                </DialogContent>
+                <DialogActions>
+                <Button variant="contained" onClick={() =>{fromEndToRestart()}}>
+                    Relancer
+                </Button>
+                </DialogActions>
+            </Dialog>
         </>
     );
 
