@@ -1,6 +1,6 @@
 package univ.m2.jee_2021_2022.model.bataille;
 
-public class Bataille {
+public class PartieBataille {
     
     private Joueur joueur;
     private Joueur bot;
@@ -11,7 +11,7 @@ public class Bataille {
     private boolean enCours;
     private boolean victoire;
 
-    public Bataille(String pseudo) {
+    public PartieBataille(String pseudo) {
         this.joueur = new Joueur(pseudo);
         this.bot = new Joueur("Ordinateur");
         this.paquetJoueur = new Paquet();
