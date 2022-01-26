@@ -16,7 +16,8 @@ public class BatailleService {
 
     private int nbRound;
     private int roundActuel;
-    private int score;
+    private int scoreJoueur;
+    private int scoreBot;
 
     public BatailleService() {
         paquet = new ArrayList<>();
@@ -28,7 +29,8 @@ public class BatailleService {
         Collections.shuffle(paquet);
         this.nbRound = 1;
         this.roundActuel = 1;
-        this.score = 0;
+        this.scoreJoueur = 0;
+        this.scoreBot = 0;
     }
 
     public void resetPaquet() {
@@ -44,7 +46,8 @@ public class BatailleService {
     public void nouvellePartie(int nbRound) {
         this.nbRound = nbRound;
         this.roundActuel = 1;
-        this.score = 0;
+        this.scoreJoueur = 0;
+        this.scoreBot = 0;
     }
 
     public boolean roundSuivant() {
@@ -57,7 +60,11 @@ public class BatailleService {
     }
 
     public void gainManche() {
-        this.score++;
+        this.scoreJoueur++;
+    }
+
+    public void echechManche() {
+        this.scoreBot++;
     }
 
     public Carte tirerCarte() {
@@ -76,8 +83,12 @@ public class BatailleService {
         return this.roundActuel;
     }
 
-    public int getScore() {
-        return this.score;
+    public int getScoreJoueur() {
+        return this.scoreJoueur;
+    }
+
+    public int getScoreBot() {
+        return this.scoreBot;
     }
 
     public ArrayList<Carte> getPaquet() {

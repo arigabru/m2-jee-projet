@@ -7,16 +7,18 @@ public class EtatPartie {
 
     private int nbRound;
     private int roundActuel;
-    private int score;
+    private int scoreJoueur;
+    private int scoreBot;
 
     private String carteJoueur;
     private String carteBot;
     private int rapport;
 
-    public EtatPartie(int nbRound, int roundActuel, int score, Carte carteJoueur, Carte carteBot, int rapport) {
+    public EtatPartie(int nbRound, int roundActuel, int scoreJoueur, int scoreBot, Carte carteJoueur, Carte carteBot, int rapport) {
         this.nbRound = nbRound;
         this.roundActuel = roundActuel;
-        this.score = score;
+        this.scoreJoueur = scoreJoueur;
+        this.scoreBot = scoreBot;
         this.carteJoueur = carteJoueur.getName();
         this.carteBot = carteBot.getName();
         this.rapport = rapport;
@@ -30,8 +32,12 @@ public class EtatPartie {
         return this.roundActuel;
     }
 
-    public int getScore() {
-        return this.score;
+    public int getScoreJoueur() {
+        return this.scoreJoueur;
+    }
+
+    public int getScoreBot() {
+        return this.scoreBot;
     }
 
     public String getCarteJoueur() {

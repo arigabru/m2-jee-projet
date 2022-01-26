@@ -39,9 +39,11 @@ public class BatailleController {
             Carte c2 = batailleService.tirerCarte();
             int rapport = batailleService.comparerCarte(c1, c2);
             if (rapport > 0) batailleService.gainManche();
+            if (rapport < 0) batailleService.echechManche();
             EtatPartie etatPartie = new EtatPartie(batailleService.getNbRound(),
                                                    batailleService.getRoundActuel(),
-                                                   batailleService.getScore(),
+                                                   batailleService.getScoreJoueur(),
+                                                   batailleService.getScoreBot(),
                                                    c1,
                                                    c2,
                                                    rapport);
