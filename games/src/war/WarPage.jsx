@@ -14,17 +14,23 @@ import { IconButton } from '@mui/material';
 import { axiosInterceptor } from '../actions/axiosInterceptor';
 import { getCard } from '../actions/warActions';
 import { useState } from "react";
+import Card from "react-free-playing-cards/lib/TcN"
+
 
 export default function WarPage() {
 
     const [val, setVal] = useState("")
     const [color, setColor] = useState("")
+    const [show, setShow] = useState(true)
+    const [playerCard, setPlayerCard] = useState("Ts")
+    const [botCard, setBotCard] = useState("Ts")
+    const [isBacked, setBack] = useState(true)
 
     const getRandCard = () => {
         getCard().then((response) => {
             setVal(response.valeur)
             setColor(response.couleur) 
-        } )
+        })
     }
 
     document.body.style.backgroundColor = "#d1deeb"
@@ -42,7 +48,8 @@ export default function WarPage() {
                 Jouer 
             </Button>
             <Typography>Var : {val} couleur : {color}</Typography>
-            
+            <Card card={playerCard} height="200px" back={isBacked}></Card>
+            <Card card={botCard} height="200px" back={isBacked}></Card>
         </>
     );
 
