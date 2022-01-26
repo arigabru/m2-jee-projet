@@ -20,12 +20,14 @@ public class BatailleController {
     private CarteService carteService;
 
     @GetMapping("/tirer")
-    public ResponseEntity<ResultatBataille> getCarteAleatoire() {
+    public ResponseEntity<ResultatBataille> tirer() {
 
         carteService.resetPaquet();
         Carte c1 = carteService.tirerCarte();
         Carte c2 = carteService.tirerCarte();
-        ResultatBataille resultat = new ResultatBataille(c1, c2, carteService.comparerCarte(c1, c2));
+        int rapport = carteService.comparerCarte(c1, c2);
+        
+        ResultatBataille resultat = new ResultatBataille(c1, c2, rapport);
         return ResponseEntity.ok(resultat);
     }
 }
