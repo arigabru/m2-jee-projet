@@ -11,46 +11,29 @@ import CardMedia from '@mui/material/CardMedia';
 import rock from './img/rockHand.png'
 import paper from './img/paperHand.png'
 import scissors from './img/scissorsHand.png'
-
+import {jouer} from '../actions/pfcActions'
 
 const RPS = () => {
 
 	const [userChoice, setuserChoice] = useState(null)
 	const [AIChoice, setAIChoice] = useState(null)
-	const coups = ['pierre', 'papier', 'ciseaux']
 	const [result , setResult] = useState(null)
 
-	const ordi = () => {
-		const choice = coups[Math.floor(Math.random() * coups.length)]
-		setAIChoice(choice)
-		
-	}
-
-	useEffect(() => {
-		{
-			switch (userChoice + AIChoice) {
-				case 'ciseauxpapier':
-				case 'pierreciseaux':
-				case 'papierpierre':
-					setResult('Victoire')
-					break
-				case 'papierciseaux':
-				case 'ciseauxpierre':
-				case 'pierrepapier':
-					setResult('Defaite')
-					break
-				case 'papierpapier':
-				case 'pierrepierre':
-				case 'ciseauxciseaux':
-					setResult('Egalite')
-					break
-			}
-		}
-	}, [AIChoice, userChoice])
-
 	const handleClick = (value) => {
-		setuserChoice(value)
-		ordi()
+
+		jouer(value).then((response) => {
+			setuserChoice(response.mainJoueur)
+			setAIChoice(response.mainBot)
+			if(response.rapport === 1){
+				setResult("Joueur")
+			}
+			if(response.rapport === -1){
+				setResult("Ordinateur")
+			}
+			if(response.rapport === 0){
+				setResult("Egalité")
+			}
+		})
 	}
 
 	return (
@@ -83,7 +66,7 @@ const RPS = () => {
 							image={rock}
 							title="Rock"
 						/>
-						<Button onClick={() => handleClick('pierre')} variant="contained"> Jouer </Button>
+						<Button onClick={() => handleClick('Pierre')} variant="contained"> Jouer </Button>
 					</Card>
 				</Grid>
 
@@ -102,7 +85,7 @@ const RPS = () => {
 							image={paper}
 							title="Rock"
 						/>
-						<Button onClick={() => handleClick('papier')} variant="contained"> Jouer </Button>
+						<Button onClick={() => handleClick('Feuille')} variant="contained"> Jouer </Button>
 					</Card>
 				</Grid>
 
@@ -121,7 +104,7 @@ const RPS = () => {
 							image={scissors}
 							title="scissors"
 						/>
-						<Button onClick={() => handleClick('ciseaux')} variant="contained"> Jouer </Button>
+						<Button onClick={() => handleClick('Ciseaux')} variant="contained"> Jouer </Button>
 					</Card>
 				</Grid>
 				<Grid item xs={4}>

@@ -25,10 +25,10 @@ public class BatailleController {
 
     @PostMapping("/start")
     @ResponseStatus(value = HttpStatus.OK)
-    public void jouer(@RequestParam(value = "nbRound") int nbRound) {
+    public void jouer(@RequestParam(value = "nbRound") String nbRound) {
 
         batailleService.resetPaquet();
-        batailleService.nouvellePartie(nbRound);
+        batailleService.nouvellePartie(Integer.parseInt(nbRound));
     }
 
     @GetMapping("/tirer")

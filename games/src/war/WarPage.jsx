@@ -4,15 +4,8 @@ import { AppBar } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/material";
 import { Button } from "@mui/material";
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { useNavigate } from "react-router-dom";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Icon } from '@mui/material';
-import { IconButton } from '@mui/material';
-import { axiosInterceptor } from '../actions/axiosInterceptor';
 import { getCard } from '../actions/warActions';
+import { startRound } from "../actions/warActions";
 import { useState } from "react";
 import Card from "react-free-playing-cards/lib/TcN"
 import DialogActions from '@mui/material/DialogActions';
@@ -25,9 +18,6 @@ import TextField from '@mui/material/TextField';
 
 export default function WarPage() {
 
-    const [val, setVal] = useState("")
-    const [color, setColor] = useState("")
-    const [show, setShow] = useState(true)
     const [playerCard, setPlayerCard] = useState("Ts")
     const [botCard, setBotCard] = useState("Ts")
     const [isBacked, setBack] = useState(true)
@@ -51,54 +41,46 @@ export default function WarPage() {
 
     const restartGame = () => {
         handleClose()
+        startRound(tempRound)
         setnbRounds(tempRound)
+        setRoundLost(0)
+        setRoundWon(0)
+        setCurrentRound(0)
     }
 
     const fromEndToRestart = () => {
         handleClose()
         setOpen(true)
-    }
-
-    const endGame = () => {
-        if(roundWon > roundLost){
-            setWinner(" Joueur ")
-        }
-        if(roundWon < roundLost){
-            setWinner(" Ordinateur ")
-        }
-        if(roundWon === roundLost){
-            setWinner(" Egalité ")
-        }
-        setGameButtonLabel("Jouer")
+        
     }
 
     const getRandCard = () => {
+        
         setBack(false)
         getCard().then((response) => {
             setPlayerCard(response.carteJoueur)
             setBotCard(response.carteBot) 
-
+            setnbRounds(response.nbRound)
             setCurrentRound(currentRound+1)
+            setRoundWon(response.scoreJoueur)
+            setRoundLost(response.scoreBot)
 
-            if(response.rapport === 1){
-                setRoundWinner("Joueur")
-                setRoundWon(roundWon+1)
-            }
-            if(response.rapport === -1){
-                setRoundWinner("Bot")
-                setRoundLost(roundLost+1)
-            }
-            if(response.rapport === 0){
-                setRoundWinner("Egalite")
-            }
-            
-            if(currentRound == nbRounds){
-                setGameButtonLabel("Fin de partie")
-                setCurrentRound(0)
+            if(response.roundActuel > response.nbRound)
+            {
+                if(response.scoreJoueur > response.scoreBot){
+                    setWinner(" Joueur ")
+                }
+                if(response.scoreJoueur < response.scoreBot){
+                    setWinner(" Ordinateur ")
+                }
+                if(response.scoreJoueur === response.scoreBot){
+                    setWinner(" Egalité ")
+                }
+                setGameButtonLabel("Jouer")
+
                 setDialogEndGameOpen(true)
-                endGame()
             }
-            
+
         })
     }
 
@@ -196,7 +178,7 @@ export default function WarPage() {
                 </Grid>
             </Box>
 
-            <Dialog open={dialogOpen} onClose={handleClose}>
+            <Dialog open={dialogOpen} >
                 <DialogTitle>Rejouer</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
@@ -221,7 +203,7 @@ export default function WarPage() {
                 </DialogActions>
             </Dialog>
 
-            <Dialog open={dialogEndGameOpen} onClose={handleClose}>
+            <Dialog open={dialogEndGameOpen} >
                 <DialogTitle>Fin de partie</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
