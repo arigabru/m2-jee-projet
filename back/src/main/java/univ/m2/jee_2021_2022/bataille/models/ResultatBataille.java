@@ -1,5 +1,8 @@
 package univ.m2.jee_2021_2022.bataille.models;
 
+/**
+ * Constitue l'information envoyé au client
+ */
 public class ResultatBataille {
     private String carteJoueur;
     private String carteBot;

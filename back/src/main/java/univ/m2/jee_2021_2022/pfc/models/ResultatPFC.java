@@ -1,5 +1,8 @@
 package univ.m2.jee_2021_2022.pfc.models;
 
+/**
+ * Constitue l'information envoyé au client
+ */
 public class ResultatPFC {
     private String mainJoueur;
     private String mainBot;
