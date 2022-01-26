@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import univ.m2.jee_2021_2022.authentication.filters.JwtRequestFilter;
@@ -31,7 +31,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/authenticate", "/bataille/tirer").permitAll()
+        http.csrf().disable().authorizeRequests().antMatchers("/authenticate", "/bataille/start", "/bataille/tirer", "/pfc/jouer").permitAll()
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             
@@ -45,9 +45,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-    }
+    // @Bean
+    // public PasswordEncoder passwordEncoder(){
+    //     return NoOpPasswordEncoder.getInstance();
+    // }
     
 }
