@@ -10,11 +10,15 @@ import univ.m2.jee_2021_2022.bataille.models.Couleur;
 import univ.m2.jee_2021_2022.bataille.models.Valeur;
 
 @Service
-public class CarteService {
+public class BatailleService {
 
     private ArrayList<Carte> paquet;
 
-    public CarteService() {
+    private int nbRound;
+    private int roundActuel;
+    private int score;
+
+    public BatailleService() {
         paquet = new ArrayList<>();
         for (Valeur v : Valeur.values()) {
             for (Couleur c : Couleur.values()) {
@@ -22,6 +26,9 @@ public class CarteService {
             }
         }
         Collections.shuffle(paquet);
+        this.nbRound = 1;
+        this.roundActuel = 1;
+        this.score = 0;
     }
 
     public void resetPaquet() {
@@ -34,11 +41,41 @@ public class CarteService {
         Collections.shuffle(paquet);
     }
 
+    public void nouvellePartie(int nbRound) {
+        this.nbRound = nbRound;
+        this.roundActuel = 1;
+        this.score = 0;
+    }
+
+    public boolean roundSuivant() {
+        if (this.roundActuel <= this.nbRound) {
+            this.roundActuel++;
+            return true;
+        }
+        return false;
+    }
+
+    public void gainManche() {
+        this.score++;
+    }
+
     public Carte tirerCarte() {
         return this.paquet.remove(0);
     }
 
     public int comparerCarte(Carte c1, Carte c2) {
         return c1.getValeur().comparer(c2.getValeur());
+    }
+
+    public int getNbRound() {
+        return this.nbRound;
+    }
+
+    public int getRoundActuel() {
+        return this.roundActuel;
+    }
+
+    public int getScore() {
+        return this.score;
     }
 }
