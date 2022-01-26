@@ -50,6 +50,7 @@ public class BatailleService {
     public boolean roundSuivant() {
         if (this.roundActuel <= this.nbRound) {
             this.roundActuel++;
+            if (this.paquet.size() < 2) this.resetPaquet();
             return true;
         }
         return false;
@@ -77,5 +78,9 @@ public class BatailleService {
 
     public int getScore() {
         return this.score;
+    }
+
+    public ArrayList<Carte> getPaquet() {
+        return this.paquet;
     }
 }
