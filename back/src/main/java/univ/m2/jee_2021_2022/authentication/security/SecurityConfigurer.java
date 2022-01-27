@@ -33,13 +33,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()
-        //.antMatchers("/api/users*").hasRole("ADMIN")
+        http.csrf().disable().authorizeRequests().antMatchers("/authenticate","/api/newuser").permitAll()
+        .antMatchers("/api/users**","/api/users/mail**","/api/users/delete**").hasRole("ADMIN")
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
+       
 
     @Override
     @Bean 
@@ -47,9 +48,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-    }
     
+    @SuppressWarnings("deprecation")
+    @Bean
+    public static NoOpPasswordEncoder passwordEncoder() {
+        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    }
 }

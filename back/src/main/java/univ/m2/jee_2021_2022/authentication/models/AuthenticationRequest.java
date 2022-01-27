@@ -1,9 +1,12 @@
 package univ.m2.jee_2021_2022.authentication.models;
 
+import org.springframework.data.annotation.Id;
+
 public class AuthenticationRequest {
     
     private String pseudo;
     private String password;
+    @Id
     private String email;
     private Boolean administrator;
 

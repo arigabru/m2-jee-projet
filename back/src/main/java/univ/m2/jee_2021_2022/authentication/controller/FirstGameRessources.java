@@ -14,6 +14,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,13 +38,19 @@ public class FirstGameRessources {
     }
 
 	//Authentifier; retourne le token, param : mail et password 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest usermodel) throws Exception {
 
+		AuthenticationRequest auth =  userDetailsService.getOneUserByEmail(usermodel.getEmail());
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+		
 		try {
-			authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(usermodel.getEmail(), usermodel.getPassword())
+			if(encoder.matches(usermodel.getPassword(), auth.getPassword())){
+				authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(usermodel.getEmail(), auth.getPassword())
 			);
+			}
+			
 		}
 		catch (BadCredentialsException e) {
 			
@@ -56,7 +63,7 @@ public class FirstGameRessources {
 				.loadUserByUsername(usermodel.getEmail());
 		
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
-		AuthenticationRequest auth = userDetailsService.getOneUserByEmail(usermodel.getEmail());
+		
 
 		return ResponseEntity.ok(new AuthenticationResponse(jwt, auth.getPseudo(), auth.getEmail()));
 	}
