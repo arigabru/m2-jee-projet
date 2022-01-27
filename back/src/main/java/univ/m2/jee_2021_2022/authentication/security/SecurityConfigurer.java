@@ -3,6 +3,7 @@ import univ.m2.jee_2021_2022.authentication.filters.JwtRequestFilter;
 import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
 import univ.m2.jee_2021_2022.authentication.services.UserService;
 
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +15,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @EnableWebSecurity
@@ -28,7 +35,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(myUserDetailsService);
-
     }
 
     @Override
@@ -39,6 +45,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.cors();
     }
 
     @Override
@@ -51,5 +58,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
     public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();
     }
+
     
 }
