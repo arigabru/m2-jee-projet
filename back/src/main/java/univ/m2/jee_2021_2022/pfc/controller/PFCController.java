@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import univ.m2.jee_2021_2022.pfc.models.Main;
-import univ.m2.jee_2021_2022.pfc.models.ResultatPFC;
+import univ.m2.jee_2021_2022.pfc.models.ResultatPFCDTO;
 import univ.m2.jee_2021_2022.pfc.services.PFCService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -21,12 +21,12 @@ public class PFCController {
     private PFCService pfcService;
 
     @PostMapping("/jouer")
-    public ResponseEntity<ResultatPFC> jouer(@RequestParam(value = "signe") Main mainJoueur) {
+    public ResponseEntity<ResultatPFCDTO> jouer(@RequestParam(value = "signe") Main mainJoueur) {
 
         Main mainBot = pfcService.signeAleatoire();
         int rapport = pfcService.comparer(mainJoueur, mainBot);
         
-        ResultatPFC resultat = new ResultatPFC(mainJoueur, mainBot, rapport);
+        ResultatPFCDTO resultat = new ResultatPFCDTO(mainJoueur, mainBot, rapport);
         return ResponseEntity.ok(resultat);
     }
 }

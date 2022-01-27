@@ -8,11 +8,17 @@ import { Divider } from "@mui/material";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export default function InscriptionPage() {
 
     const {register, handleSubmit, control} = useForm()
     const onSubmit = (data) => console.log(data);
+
+    const navigate = useNavigate();
+    const goToConnect = () => {
+        navigate('/')
+    }
 
     document.body.style.backgroundColor = "#d1deeb"   
     return(
@@ -107,6 +113,7 @@ export default function InscriptionPage() {
                                             onClick={handleSubmit(onSubmit)}>
                                                 S'inscrire
                                             </Button>
+                                            
                                         </Grid>
                                     </form>
                                 </Box>

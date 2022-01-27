@@ -14,6 +14,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
+import { useNavigate } from "react-router-dom";
 
 
 export default function WarPage() {
@@ -32,6 +33,10 @@ export default function WarPage() {
     const [winner, setWinner] = useState(null)
     const [gameButtonLabel, setGameButtonLabel] = useState("Jouer")
     
+    const navigate = useNavigate();
+    const goToMenu = () => {
+        navigate('/gameBoard')
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -179,7 +184,7 @@ export default function WarPage() {
             </Box>
 
             <Dialog open={dialogOpen} >
-                <DialogTitle>Rejouer</DialogTitle>
+                <DialogTitle>Manches</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
                     Entrez le nombre de manches que vous souhaitez jouer
@@ -211,6 +216,9 @@ export default function WarPage() {
                 </DialogContentText>                
                 </DialogContent>
                 <DialogActions>
+                <Button variant="contained" onClick={() =>{goToMenu()}}>
+                    Menu
+                </Button>
                 <Button variant="contained" onClick={() =>{fromEndToRestart()}}>
                     Relancer
                 </Button>

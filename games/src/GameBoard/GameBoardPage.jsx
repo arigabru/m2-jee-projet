@@ -15,9 +15,11 @@ import { useNavigate } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Icon } from '@mui/material';
 import { IconButton } from '@mui/material';
+import { Drawer } from '@mui/material';
+import { useState } from "react";
 
 
-export default function GameBoardPage() {
+export default function GameBoardPage() { 
 
     const navigate = useNavigate();
     const goToPFC = () => {
@@ -26,6 +28,10 @@ export default function GameBoardPage() {
 
     const goToWar = () => {
         navigate('/war')
+    }
+
+    const goToProfile = () => {
+        navigate('/profile')
     }
 
     document.body.style.backgroundColor = "#d1deeb"
@@ -40,7 +46,7 @@ export default function GameBoardPage() {
                         
                     </Grid>
                     <Grid item xs={'auto'} md={2}>
-                        <IconButton color="inherit" > 
+                        <IconButton color="inherit" onClick={() =>{goToProfile()}} > 
                             <AccountCircleIcon 
                             fontSize="large"
                             />
@@ -48,6 +54,8 @@ export default function GameBoardPage() {
                     </Grid>
                 </Grid>
             </AppBar>
+
+            
 
             <Box container display="flex"
                 justifyContent="center"
@@ -131,10 +139,20 @@ export default function GameBoardPage() {
                         </Card>
 
                     </Grid>
+                    <Grid item>
+                        
+                    </Grid>
                 </Grid>
                 
             </Box>
-
+            <Grid container
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="center"
+                    spacing={4}
+                    xs={12}>
+                    <Typography variant="h4">Bienvenue {sessionStorage.getItem('pseudo')} !</Typography>
+            </Grid>
         </>
 
     );

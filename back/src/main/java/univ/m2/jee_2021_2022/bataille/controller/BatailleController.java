@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import univ.m2.jee_2021_2022.bataille.models.Carte;
-import univ.m2.jee_2021_2022.bataille.models.EtatPartie;
+import univ.m2.jee_2021_2022.bataille.models.EtatPartieDTO;
 import univ.m2.jee_2021_2022.bataille.services.BatailleService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -32,7 +32,7 @@ public class BatailleController {
     }
 
     @GetMapping("/tirer")
-    public ResponseEntity<EtatPartie> tirer() {
+    public ResponseEntity<EtatPartieDTO> tirer() {
 
         if (batailleService.roundSuivant()) {
             Carte c1 = batailleService.tirerCarte();
@@ -40,7 +40,7 @@ public class BatailleController {
             int rapport = batailleService.comparerCarte(c1, c2);
             if (rapport > 0) batailleService.gainManche();
             if (rapport < 0) batailleService.echechManche();
-            EtatPartie etatPartie = new EtatPartie(batailleService.getNbRound(),
+            EtatPartieDTO etatPartie = new EtatPartieDTO(batailleService.getNbRound(),
                                                    batailleService.getRoundActuel(),
                                                    batailleService.getScoreJoueur(),
                                                    batailleService.getScoreBot(),

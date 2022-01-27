@@ -3,7 +3,7 @@ package univ.m2.jee_2021_2022.bataille.models;
 /**
  * Constitue l'information envoyé au client
  */
-public class EtatPartie {
+public class EtatPartieDTO {
 
     private int nbRound;
     private int roundActuel;
@@ -14,7 +14,7 @@ public class EtatPartie {
     private String carteBot;
     private int rapport;
 
-    public EtatPartie(int nbRound, int roundActuel, int scoreJoueur, int scoreBot, Carte carteJoueur, Carte carteBot, int rapport) {
+    public EtatPartieDTO(int nbRound, int roundActuel, int scoreJoueur, int scoreBot, Carte carteJoueur, Carte carteBot, int rapport) {
         this.nbRound = nbRound;
         this.roundActuel = roundActuel;
         this.scoreJoueur = scoreJoueur;
