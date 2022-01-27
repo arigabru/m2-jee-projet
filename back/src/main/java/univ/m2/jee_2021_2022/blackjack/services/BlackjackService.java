@@ -113,7 +113,7 @@ public class BlackjackService {
 		return this.coupPossibleJoueur;
     }
 
-	public boolean tourBot() {
+	public void tourBot() {
         this.deckBot.add(this.paquet.remove(0));
 
 		int somme = 0;
@@ -136,13 +136,10 @@ public class BlackjackService {
 		else {
 			if (somme > 21 || somme > this.sommeJoueur) {
 				this.echechManche();
-				return false;
 			} else {
 				this.gainManche();
-				return true;
 			}
 		}
-		return false;
     }
 
     public int comparerCarte(CarteDTO c1, CarteDTO c2) {
