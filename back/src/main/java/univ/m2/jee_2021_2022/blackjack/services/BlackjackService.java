@@ -5,9 +5,9 @@ import java.util.Collections;
 
 import org.springframework.stereotype.Service;
 
-import univ.m2.jee_2021_2022.bataille.models.CarteDTO;
-import univ.m2.jee_2021_2022.bataille.models.Couleur;
-import univ.m2.jee_2021_2022.bataille.models.Valeur;
+import univ.m2.jee_2021_2022.blackjack.models.CarteDTO;
+import univ.m2.jee_2021_2022.blackjack.models.Couleur;
+import univ.m2.jee_2021_2022.blackjack.models.Valeur;
 
 @Service
 public class BlackjackService {

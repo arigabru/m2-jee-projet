@@ -5,14 +5,14 @@ import java.util.Collections;
 
 import org.springframework.stereotype.Service;
 
-import univ.m2.jee_2021_2022.bataille.models.CarteDTO;
+import univ.m2.jee_2021_2022.bataille.models.Carte;
 import univ.m2.jee_2021_2022.bataille.models.Couleur;
 import univ.m2.jee_2021_2022.bataille.models.Valeur;
 
 @Service
 public class BatailleService {
 
-    private ArrayList<CarteDTO> paquet;
+    private ArrayList<Carte> paquet;
 
     private int nbRound;
     private int roundActuel;
@@ -23,7 +23,7 @@ public class BatailleService {
         paquet = new ArrayList<>();
         for (Valeur v : Valeur.values()) {
             for (Couleur c : Couleur.values()) {
-                paquet.add(new CarteDTO(v, c));
+                paquet.add(new Carte(v, c));
             }
         }
         Collections.shuffle(paquet);
@@ -37,7 +37,7 @@ public class BatailleService {
         paquet = new ArrayList<>();
         for (Valeur v : Valeur.values()) {
             for (Couleur c : Couleur.values()) {
-                paquet.add(new CarteDTO(v, c));
+                paquet.add(new Carte(v, c));
             }
         }
         Collections.shuffle(paquet);
@@ -67,11 +67,11 @@ public class BatailleService {
         this.scoreBot++;
     }
 
-    public CarteDTO tirerCarte() {
+    public Carte tirerCarte() {
         return this.paquet.remove(0);
     }
 
-    public int comparerCarte(CarteDTO c1, CarteDTO c2) {
+    public int comparerCarte(Carte c1, Carte c2) {
         return c1.getValeur().comparer(c2.getValeur());
     }
 
@@ -91,7 +91,7 @@ public class BatailleService {
         return this.scoreBot;
     }
 
-    public ArrayList<CarteDTO> getPaquet() {
+    public ArrayList<Carte> getPaquet() {
         return this.paquet;
     }
 }
