@@ -14,7 +14,11 @@ public class EtatPartieDTO {
     private String carteBot;
     private int rapport;
 
+<<<<<<< HEAD
     public EtatPartieDTO(int nbRound, int roundActuel, int scoreJoueur, int scoreBot, Carte carteJoueur, Carte carteBot, int rapport) {
+=======
+    public EtatPartieDTO(int nbRound, int roundActuel, int scoreJoueur, int scoreBot, CarteDTO carteJoueur, CarteDTO carteBot, int rapport) {
+>>>>>>> c943c45e64b63bdcaae0f301a47c17b82f58d477
         this.nbRound = nbRound;
         this.roundActuel = roundActuel;
         this.scoreJoueur = scoreJoueur;

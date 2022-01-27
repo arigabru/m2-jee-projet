@@ -33,8 +33,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+<<<<<<< HEAD
         http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()
         //.antMatchers("/api/users*").hasRole("ADMIN")
+=======
+        http.csrf().disable().authorizeRequests().antMatchers("/authenticate", "/bataille/start", "/bataille/tirer", "/pfc/jouer", "/blackjack/start", "/blackjack/tirer").permitAll()
+>>>>>>> c943c45e64b63bdcaae0f301a47c17b82f58d477
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
