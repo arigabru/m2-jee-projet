@@ -1,4 +1,4 @@
-package univ.m2.jee_2021_2022.bataille.models;
+package univ.m2.jee_2021_2022.blackjack.models;
 
 public enum Valeur {
     DEUX(2, "2"),

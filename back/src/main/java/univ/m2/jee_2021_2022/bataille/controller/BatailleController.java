@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import univ.m2.jee_2021_2022.bataille.models.Carte;
-import univ.m2.jee_2021_2022.bataille.models.EtatPartie;
+import univ.m2.jee_2021_2022.bataille.models.CarteDTO;
+import univ.m2.jee_2021_2022.bataille.models.EtatPartieDTO;
 import univ.m2.jee_2021_2022.bataille.services.BatailleService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -25,30 +25,38 @@ public class BatailleController {
 
     @PostMapping("/start")
     @ResponseStatus(value = HttpStatus.OK)
-    public void jouer(@RequestParam(value = "nbRound") String nbRound) {
+    public void jouer(@RequestParam(value = "nbRound") int nbRound) {
 
         batailleService.resetPaquet();
-        batailleService.nouvellePartie(Integer.parseInt(nbRound));
+        batailleService.nouvellePartie(nbRound);
     }
 
     @GetMapping("/tirer")
-    public ResponseEntity<EtatPartie> tirer() {
+    public ResponseEntity<EtatPartieDTO> tirer() {
 
+        EtatPartieDTO etatPartie;
         if (batailleService.roundSuivant()) {
-            Carte c1 = batailleService.tirerCarte();
-            Carte c2 = batailleService.tirerCarte();
+            CarteDTO c1 = batailleService.tirerCarte();
+            CarteDTO c2 = batailleService.tirerCarte();
             int rapport = batailleService.comparerCarte(c1, c2);
             if (rapport > 0) batailleService.gainManche();
             if (rapport < 0) batailleService.echechManche();
-            EtatPartie etatPartie = new EtatPartie(batailleService.getNbRound(),
+            etatPartie = new EtatPartieDTO(batailleService.getNbRound(),
                                                    batailleService.getRoundActuel(),
                                                    batailleService.getScoreJoueur(),
                                                    batailleService.getScoreBot(),
                                                    c1,
                                                    c2,
                                                    rapport);
-            return ResponseEntity.ok(etatPartie);
+        } else {
+            etatPartie = new EtatPartieDTO(batailleService.getNbRound(),
+            batailleService.getRoundActuel(),
+            batailleService.getScoreJoueur(),
+            batailleService.getScoreBot(),
+            null,
+            null,
+            0);
         }
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(etatPartie);
     }
 }
