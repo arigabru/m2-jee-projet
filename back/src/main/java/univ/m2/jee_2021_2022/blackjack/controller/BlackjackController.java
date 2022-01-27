@@ -38,4 +38,12 @@ public class BlackjackController {
         EtatBlackjackDTO etatPartie = new EtatBlackjackDTO(blackjackService.getNbRound(), blackjackService.getRoundActuel(), blackjackService.getScoreJoueur(), blackjackService.getScoreBot(), blackjackService.getDeckJoueur(), blackjackService.getDeckBot(), blackjackService.isCoupPossibleJoueur(), blackjackService.getSommeJoueur());
         return ResponseEntity.ok(etatPartie);
     }
+
+    @GetMapping("/stop")
+    public ResponseEntity<EtatBlackjackDTO> tourBot() {
+
+        blackjackService.tourBot();
+        EtatBlackjackDTO etatPartie = new EtatBlackjackDTO(blackjackService.getNbRound(), blackjackService.getRoundActuel(), blackjackService.getScoreJoueur(), blackjackService.getScoreBot(), blackjackService.getDeckJoueur(), blackjackService.getDeckBot(), blackjackService.isCoupPossibleJoueur(), blackjackService.getSommeJoueur());
+        return ResponseEntity.ok(etatPartie);
+    }
 }
