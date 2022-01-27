@@ -18,20 +18,6 @@ public class Jee20212022Application {
 		SpringApplication.run(Jee20212022Application.class, args);
 		
 	}
-<<<<<<< HEAD
-	/*
-	@Bean
-    CommandLineRunner run(UserService userService){
-        return  args -> {
-            userService.addUser(new AuthenticationRequest("professor",  "1234","professor@gmail.com", true));
-            userService.addUser(new AuthenticationRequest("titouan",  "1234","titouan@gmail.com", true));
-            userService.addUser(new AuthenticationRequest("eden",  "1234", "eden@gmail.com",false));
-            userService.addUser(new AuthenticationRequest("bruno",  "1234", "bruno@gmail.com",false));
-        };
-    }*/
-
-  
-=======
 	
 	// @Bean
     // CommandLineRunner run(UserService userService){
@@ -42,5 +28,4 @@ public class Jee20212022Application {
     //         userService.addUser(new AuthenticationRequest("bruno", "1234", "bruno@gmail.com", false));
     //     };
     // }
->>>>>>> e406a46a2b2d92094aaccc5b079069ddd1e59ad7
 }
