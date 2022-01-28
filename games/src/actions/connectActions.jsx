@@ -12,3 +12,4 @@ export function connect(email, password) {
             console.log(error);
         });
 }
+

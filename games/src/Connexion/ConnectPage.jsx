@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { connect } from "../actions/connectActions";
+import { getAdmin } from "../actions/connectActions";
 import { useState } from "react";
 
 export default function ConnectPage() {
@@ -35,6 +36,7 @@ export default function ConnectPage() {
             console.log(sessionStorage.getItem('token'))
             goToBoardGame()
         })
+
 
     } 
 

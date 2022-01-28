@@ -17,6 +17,7 @@ import { Icon } from '@mui/material';
 import { IconButton } from '@mui/material';
 import { Drawer } from '@mui/material';
 import { useState } from "react";
+import { getAdmin } from "../actions/gameBoardActions";
 
 
 export default function GameBoardPage() { 
@@ -35,7 +36,14 @@ export default function GameBoardPage() {
     }
 
     const goToProfile = () => {
+        getAdmin(sessionStorage.getItem('mail')).then((response) => {
+            sessionStorage.setItem('isAdmin', response)
+        })
         navigate('/profile')
+    }
+
+    const verifyAdmin = () => {
+        
     }
 
     document.body.style.backgroundColor = "#d1deeb"
@@ -155,7 +163,7 @@ export default function GameBoardPage() {
                     justifyContent="center"
                     spacing={4}
                     xs={12}>
-                    <Typography variant="h4">Bienvenue {sessionStorage.getItem('pseudo')} !</Typography>
+                    <Typography variant="h4">Bienvenue {sessionStorage.getItem('pseudo')} ! </Typography>
             </Grid>
         </>
 

@@ -89,7 +89,6 @@ public class UserController {
     @GetMapping(value="/api/users/mail")
     public ResponseEntity<AuthenticationRequest> getUserByMail(@RequestParam(value ="mail") String mail){
 
-        AuthenticationRequest user = userService.getOneUserByEmail(mail);
         if (!userService.findUserFromEmail(mail)){
             return new ResponseEntity("{\"information\" : \"user not exist\"}" ,HttpStatus.NOT_FOUND);
         }
