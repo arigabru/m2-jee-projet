@@ -10,12 +10,12 @@ public class EtatBlackjackDTO {
     private int scoreJoueur;
     private int scoreBot;
 
-    private ArrayList<CarteDTO> deckJoueur;
-    private ArrayList<CarteDTO> deckBot;
+    private ArrayList<String> deckJoueur;
+    private ArrayList<String> deckBot;
     private boolean coupPossibleJoueur;
 	private int sommeJoueur;
 
-    public EtatBlackjackDTO(int nbRound, int roundActuel, int scoreJoueur, int scoreBot, ArrayList<CarteDTO> deckJoueur, ArrayList<CarteDTO> deckBot, boolean coupPossibleJoueur, int sommeJoueur) {
+    public EtatBlackjackDTO(int nbRound, int roundActuel, int scoreJoueur, int scoreBot, ArrayList<String> deckJoueur, ArrayList<String> deckBot, boolean coupPossibleJoueur, int sommeJoueur) {
         this.nbRound = nbRound;
         this.roundActuel = roundActuel;
         this.scoreJoueur = scoreJoueur;
@@ -42,11 +42,11 @@ public class EtatBlackjackDTO {
         return this.scoreBot;
     }
 
-    public ArrayList<CarteDTO> getDeckJoueur() {
+    public ArrayList<String> getDeckJoueur() {
         return this.deckJoueur;
     }
 
-    public ArrayList<CarteDTO> getDeckBot() {
+    public ArrayList<String> getDeckBot() {
         return this.deckBot;
     }
 

@@ -12,9 +12,9 @@ public class EtatPfcDTO {
     private int roundActuel;
     private int nbRound;
 
-    public EtatPfcDTO(Main carteJoueur, Main carteBot, int rapport, int scoreJoueur, int scoreBot, int roundActuel, int nbRound) {
-        this.mainJoueur = carteJoueur.name();
-        this.mainBot = carteBot.name();
+    public EtatPfcDTO(Main mainJoueur, Main mainBot, int rapport, int scoreJoueur, int scoreBot, int roundActuel, int nbRound) {
+        this.mainJoueur = mainJoueur.name();
+        this.mainBot = mainBot.name();
         this.rapport = rapport;
         this.scoreJoueur = scoreJoueur;
         this.scoreBot = scoreBot;

@@ -83,6 +83,9 @@ public class BlackjackService {
     }
 
     public boolean tirerCarteJoueur() {
+        if (this.deckJoueur.size() != 0) {
+            this.roundSuivant();
+        }
         this.deckJoueur.add(this.paquet.remove(0));
 
 		int somme = 0;
