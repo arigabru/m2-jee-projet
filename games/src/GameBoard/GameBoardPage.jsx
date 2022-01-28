@@ -30,6 +30,10 @@ export default function GameBoardPage() {
         navigate('/war')
     }
 
+    const goToBlackjack = () => {
+        navigate('/blackjack')
+    }
+
     const goToProfile = () => {
         navigate('/profile')
     }
@@ -134,7 +138,7 @@ export default function GameBoardPage() {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button>Jouer</Button>
+                            <Button onClick={() =>{goToBlackjack()}}>Jouer</Button>
                         </CardActions>
                         </Card>
 

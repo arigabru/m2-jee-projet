@@ -6,6 +6,7 @@ import GameBoardPage from './GameBoard/GameBoardPage';
 import RPS from './PFC/RPS';
 import WarPage from './war/WarPage';
 import ProfilePage from './Profile/ProfilePage';
+import BlackjackPage from './Blackjack/BlackjackPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/pfc" element={<RPS/>} />
         <Route path="/war" element={<WarPage/>} />
         <Route path="/profile" element={<ProfilePage/>} />
+        <Route path="/blackjack" element={<BlackjackPage/>} />
       </Routes>
     </BrowserRouter>
     </div>

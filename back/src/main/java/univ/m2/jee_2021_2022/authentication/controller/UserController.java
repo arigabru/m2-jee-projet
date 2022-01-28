@@ -45,7 +45,7 @@ public class UserController {
         if (!validate(auth.getEmail().toString())){
             return new ResponseEntity("{\"information\" : \"mail not valid\"}" ,HttpStatus.BAD_REQUEST);
         }
-        if (!userService.findUserFromEmail(auth.getEmail())){
+        if (userService.findUserFromEmail(auth.getEmail())){
             return new ResponseEntity("{\"information\" : \"user already exist\"}" ,HttpStatus.BAD_REQUEST);   
         }
 
@@ -73,10 +73,11 @@ public class UserController {
     @GetMapping(value="/api/users/mail")
     public ResponseEntity<AuthenticationRequest> getUserByMail(@RequestParam(value ="mail") String mail){
 
-        AuthenticationRequest user = userService.getOneUserByEmail(mail);
-        if (user==null){
+        if (!userService.findUserFromEmail(mail)){
             return new ResponseEntity("{\"information\" : \"user not exist\"}" ,HttpStatus.NOT_FOUND);
         }
+        AuthenticationRequest user = userService.getOneUserByEmail(mail);
+        
         //retrait des mots de passe  
         user.setPassword(null);
 
@@ -85,8 +86,7 @@ public class UserController {
 
     @DeleteMapping(value="/api/users/delete")
     public ResponseEntity<?> deleteUserByMail(@RequestParam(value ="mail") String mail){
-        System.out.println(mail);
-        if (userService.getOneUserByEmail(mail) == null){
+        if (!userService.findUserFromEmail(mail)){
             return new ResponseEntity("{\"information\" : \"user not exist\"}" ,HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(userService.deleteUserByMail(mail));

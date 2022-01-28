@@ -9,11 +9,26 @@ import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { inscritpion } from "../actions/inscriptionActions";
 
 export default function InscriptionPage() {
 
     const {register, handleSubmit, control} = useForm()
-    const onSubmit = (data) => console.log(data);
+    //const [pseudo, setPseudo] = useState(null)
+    //const [password, setPassword] = useState(null)
+    //const [email, setEmail] = useState(null)
+
+    var email, pseudo, password
+
+    const onSubmit = (data) => {
+
+        pseudo = data.pseudo
+        password = data.mdp
+        email = data.email
+        inscritpion(pseudo, password, email)
+
+    }
 
     const navigate = useNavigate();
     const goToConnect = () => {
@@ -116,8 +131,33 @@ export default function InscriptionPage() {
                                             
                                         </Grid>
                                     </form>
+
                                 </Box>
                             </Paper>
+                            <Box sx={{mt:5}}>
+                                <Grid Container>
+                                    <Grid item>
+                                        <Paper elevation={4}>
+                                            <Grid item md={12} sx={{ pt: 2 , pl: 4, pr: 4 }}>
+                                                <Typography variant="h5">
+                                                    Le mot de passe doit respecter les règles suivantes :
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item md={12} sx={{ pt: 2 , pl: 4, pr: 4 }}>
+                                                <Typography variant="h5">
+                                                    8 caractères minimum
+                                                </Typography>
+                                                <Typography variant="h5">
+                                                    Une majuscule
+                                                </Typography>
+                                                <Typography variant="h5">
+                                                    Un chiffre
+                                                </Typography>
+                                            </Grid>
+                                        </Paper>
+                                    </Grid>
+                                </Grid>
+                            </Box>
                         </Grid>
                     </Grid>
                     <Grid item md={2}>

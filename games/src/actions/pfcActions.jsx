@@ -8,7 +8,7 @@ export function getCard() {
 
 export function jouer(signe) {
     return axiosInterceptor
-        .post('http://localhost:6237/pfc/jouer?signe=' + signe, { 
+        .get('http://localhost:6237/pfc/jouer?signe=' + signe, { 
 
         })
         .then((response) => response.data)

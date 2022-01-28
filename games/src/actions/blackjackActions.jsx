@@ -5,9 +5,13 @@ export function getCard() {
     return axiosInterceptor.get("/blackjack/tirer").then((response) => response.data);
 }
 
+export function stopDraw() {
+    return axiosInterceptor.get("/blackjack/stop").then((response) => response.data);
+}
+
 export function startRound(round) {
     return axiosInterceptor
-        .post('http://localhost:3000/blackjack/start?nbRound=' + round, { 
+        .get('/blackjack/start?nbRound=' + round, { 
 
         })
         .then((response) => response.data)

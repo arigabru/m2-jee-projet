@@ -7,7 +7,7 @@ export function getCard() {
 
 export function startRound(round) {
     return axiosInterceptor
-        .post('http://localhost:6237/bataille/start?nbRound=' + round, { 
+        .get('http://localhost:6237/bataille/start?nbRound=' + round, { 
 
         })
         .then((response) => response.data)

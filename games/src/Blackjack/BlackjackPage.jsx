@@ -25,12 +25,16 @@ export default function BlackjackPage() {
     const [roundWon, setRoundWon] = useState(0)
     const [roundLost, setRoundLost] = useState(0)
     const [nbRounds, setnbRounds] = useState(5)
-    const [tempRound, setTempRound] = useState(0)
-    const [currentRound, setCurrentRound] = useState(0)
+    const [tempRound, setTempRound] = useState(1)
+    const [currentRound, setCurrentRound] = useState(1)
     const [dialogOpen, setOpen] = useState(true)
     const [dialogEndGameOpen, setDialogEndGameOpen] = useState(false)
     const [winner, setWinner] = useState(null)
     const [gameButtonLabel, setGameButtonLabel] = useState("Jouer")
+    const [scoreJoueur, setScoreJoueur] = useState(0)
+    const [scoreBot, setScoreBot] = useState(0)
+    const[mainJoueur, setMainJoueur]=useState([])
+    const[mainBot, setMainBot]=useState([])
 
     const navigate = useNavigate();
     const goToMenu = () => {
@@ -49,7 +53,7 @@ export default function BlackjackPage() {
         setnbRounds(tempRound)
         setRoundLost(0)
         setRoundWon(0)
-        setCurrentRound(0)
+        setCurrentRound(1)
     }
 
     const fromEndToRestart = () => {
@@ -70,6 +74,11 @@ export default function BlackjackPage() {
             setCurrentRound(currentRound+1)
             setRoundWon(response.scoreJoueur)
             setRoundLost(response.scoreBot)
+            */
+            
+            setMainJoueur(response.deckJoueur)
+            //console.log(mainJoueur)
+            console.log(response)
 
             if(response.roundActuel > response.nbRound)
             {
@@ -86,9 +95,12 @@ export default function BlackjackPage() {
 
                 setDialogEndGameOpen(true)
             }
-                */
+                
+               
         })
     }
+
+    document.body.style.backgroundColor = "#d1deeb"
     return (
         <>
             <AppBar position="static" color="warning" sx={{backgroundColor:"#8cb9e6"}}>
@@ -100,7 +112,136 @@ export default function BlackjackPage() {
             </AppBar>
 
             <Button onClick={() =>{getRandCard()}}> Tirer </Button>
+
+            <Box sx={{ pt: 10 }} >
+            <Grid container>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={3}>
+                        <Typography variant="h5"> Joueur </Typography>
+                        <Typography variant="h5" sx={{mt:2}}> Score : {scoreJoueur} </Typography>
+                    </Grid>
+                    <Grid item md={3}>
+                        <Card card={playerCard} height="200px" back={isBacked}></Card>
+                    </Grid>
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={3}>
+                        <Typography variant="h5"> Ordinateur </Typography>
+                        <Typography variant="h5" sx={{mt:2}}> Score : {scoreBot} </Typography>
+                    </Grid> 
+                    <Grid item md={3}>
+                        <Card card={botCard} height="200px" back={isBacked}></Card>
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Button variant="contained" onClick={() =>{getRandCard()}}>
+                            Tirer
+                        </Button>                    
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{pt:5}}>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Typography variant="h4"> Gagnant de la manche : {roundWinner}</Typography>                 
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{pt:5}}>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Typography variant="h6"> Nombre de manches remportées par le joueur : {roundWon}</Typography>   
+                        <Typography variant="h6"> Nombre de manches remportées par l'ordinateur : {roundLost}</Typography>                
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{pt:5}}>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Typography variant="h6"> Manche : {currentRound}/{nbRounds}</Typography>                 
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+
+                <Grid container>
+                    <Grid item md={3}>
+                    </Grid>    
+                    <Grid item md={6}>
+                        <Button variant="contained" onClick={() =>{setOpen(true)}}>
+                            Relancer
+                        </Button>                    
+                    </Grid> 
+                    <Grid item md={3}>
+                    </Grid>
+                </Grid>
+            </Box>
+
+            <Dialog open={dialogOpen} >
+            <DialogTitle>Manches</DialogTitle>
+            <DialogContent>
+            <DialogContentText>
+                Entrez le nombre de manches que vous souhaitez jouer
+            </DialogContentText>
+            <TextField
+                autoFocus
+                margin="dense"
+                id="nbRounds"
+                label="Nombre de manches"
+                type="number"
+                fullWidth
+                variant="standard"
+                onChange={(event) => setTempRound(event.target.value)} 
+            />
+
+            </DialogContent>
+            <DialogActions>
+            <Button variant="contained" onClick={() =>{restartGame()}}>
+                Jouer
+            </Button>
+            </DialogActions>
+            </Dialog>
+
+            <Dialog open={dialogEndGameOpen} >
+                <DialogTitle>Fin de partie</DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                    Le gagnant est : {winner}
+                </DialogContentText>                
+                </DialogContent>
+                <DialogActions>
+                <Button variant="contained" onClick={() =>{goToMenu()}}>
+                    Menu
+                </Button>
+                <Button variant="contained" onClick={() =>{fromEndToRestart()}}>
+                    Relancer
+                </Button>
+                </DialogActions>
+            </Dialog>            
         </>
+
+        
     );
 
 }
