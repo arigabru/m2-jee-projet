@@ -65,7 +65,7 @@ public class BlackjackController {
                                                            blackjackService.getScoreJoueur(),
                                                            blackjackService.getScoreBot(),
                                                            deckJoueurName,
-                                                           deckJoueurName,
+                                                           deckBotName,
                                                            blackjackService.isCoupPossibleJoueur(), 
                                                            blackjackService.getSommeJoueur(),
                                                            blackjackService.getSommeBot());
@@ -96,7 +96,7 @@ public class BlackjackController {
                                                            blackjackService.getScoreJoueur(),
                                                            blackjackService.getScoreBot(),
                                                            deckJoueurName,
-                                                           deckJoueurName,
+                                                           deckBotName,
                                                            blackjackService.isCoupPossibleJoueur(),
                                                            blackjackService.getSommeJoueur(),
                                                            blackjackService.getSommeBot());
