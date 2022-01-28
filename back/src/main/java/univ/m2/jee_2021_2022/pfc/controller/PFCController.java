@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -29,7 +28,7 @@ public class PFCController {
 
     @GetMapping("/start")
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseEntity<?> jouer(@RequestParam(value = "nbRound") String nbRound) {
+    public ResponseEntity<?> start(@RequestParam(value = "nbRound") String nbRound) {
         
         if (!isPlayable()){
             return new ResponseEntity("{\"information\" : \"pfc not activated\"}" ,HttpStatus.BAD_REQUEST);

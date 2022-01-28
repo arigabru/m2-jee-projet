@@ -2,8 +2,6 @@ package univ.m2.jee_2021_2022.blackjack.models;
 
 import java.util.ArrayList;
 
-import univ.m2.jee_2021_2022.blackjack.models.CarteDTO;
-
 public class EtatBlackjackDTO {
     private int nbRound;
     private int roundActuel;
