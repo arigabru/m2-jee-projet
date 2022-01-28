@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
+import univ.m2.jee_2021_2022.authentication.models.Games;
+import univ.m2.jee_2021_2022.authentication.services.GamesServices;
 import univ.m2.jee_2021_2022.authentication.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserService userService ;
+
+    @Autowired 
+    private GamesServices gamesServices ;
 
     @GetMapping(value="/api/users")
     public ResponseEntity<List<AuthenticationRequest>> getUser(){
@@ -63,7 +68,7 @@ public class UserController {
 
     @GetMapping(value="/api/users/mail")
     public ResponseEntity<AuthenticationRequest> getUserByMail(@RequestParam(value ="mail") String mail){
-        
+
         AuthenticationRequest user = userService.getOneUserByEmail(mail);
         user.setPassword(null);
         return ResponseEntity.ok(user);
@@ -76,6 +81,16 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(userService.deleteUserByMail(mail));
+    }
+
+    @GetMapping(value="/api/games/informations")
+    public Games getInformations(){
+        return gamesServices.getInformationGames();
+    }
+
+    @PostMapping(value="/api/games/informations")
+    public Games updatesGamesInformations(@RequestBody Games g){
+        return gamesServices.UpdatesInfomationsGames(g);
     }
 
     Boolean matchesPolicy(String pwd) {

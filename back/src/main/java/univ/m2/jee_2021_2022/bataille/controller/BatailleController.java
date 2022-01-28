@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import univ.m2.jee_2021_2022.authentication.services.GamesServices;
 import univ.m2.jee_2021_2022.bataille.models.Carte;
 import univ.m2.jee_2021_2022.bataille.models.EtatPartieDTO;
 import univ.m2.jee_2021_2022.bataille.services.BatailleService;
@@ -23,17 +24,29 @@ public class BatailleController {
     @Autowired
     private BatailleService batailleService;
 
+    @Autowired
+    private GamesServices gamesServices;
+
     @PostMapping("/start")
     @ResponseStatus(value = HttpStatus.OK)
     public void jouer(@RequestParam(value = "nbRound") String nbRound) {
-
+        
+        if (!isPlayable()){
+            ResponseEntity.notFound();
+        }
+        
         batailleService.resetPaquet();
         batailleService.nouvellePartie(Integer.parseInt(nbRound));
+        
+       
     }
 
     @GetMapping("/tirer")
     public ResponseEntity<EtatPartieDTO> tirer() {
 
+        if (!isPlayable()){
+            ResponseEntity.notFound();
+        }
         if (batailleService.roundSuivant()) {
             Carte c1 = batailleService.tirerCarte();
             Carte c2 = batailleService.tirerCarte();
@@ -50,5 +63,9 @@ public class BatailleController {
             return ResponseEntity.ok(etatPartie);
         }
         return ResponseEntity.ok(null);
+    }
+
+    public Boolean isPlayable(){
+        return gamesServices.getInformationGames().getBataille();
     }
 }
