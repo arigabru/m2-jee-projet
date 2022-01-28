@@ -3,12 +3,6 @@ package univ.m2.jee_2021_2022.authentication.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.message.AuthStatus;
-
-import univ.m2.jee_2021_2022.authentication.Repository.UserRepository;
-import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
-import univ.m2.jee_2021_2022.authentication.controller.FirstGameRessources;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import univ.m2.jee_2021_2022.authentication.Repository.UserRepository;
+import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
 
 @Service
 public class UserService implements UserDetailsService {

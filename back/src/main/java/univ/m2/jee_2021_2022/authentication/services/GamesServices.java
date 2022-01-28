@@ -1,7 +1,5 @@
 package univ.m2.jee_2021_2022.authentication.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

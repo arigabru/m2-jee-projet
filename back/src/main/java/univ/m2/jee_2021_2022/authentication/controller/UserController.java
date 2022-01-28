@@ -4,15 +4,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
-import univ.m2.jee_2021_2022.authentication.models.Games;
-import univ.m2.jee_2021_2022.authentication.services.GamesServices;
-import univ.m2.jee_2021_2022.authentication.services.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
+import univ.m2.jee_2021_2022.authentication.models.Games;
+import univ.m2.jee_2021_2022.authentication.services.GamesServices;
+import univ.m2.jee_2021_2022.authentication.services.UserService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

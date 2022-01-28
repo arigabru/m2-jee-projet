@@ -35,7 +35,7 @@ public class PFCController {
         }
 
         pfcService.nouvellePartie(Integer.parseInt(nbRound));
-        return new ResponseEntity("{\"information\" : \"Start battle\"}" ,HttpStatus.OK);
+        return new ResponseEntity("{\"information\" : \"Start rock-paper-scissors\"}" ,HttpStatus.OK);
        
     }
 

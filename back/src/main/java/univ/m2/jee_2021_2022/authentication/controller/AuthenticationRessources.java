@@ -1,18 +1,12 @@
 package univ.m2.jee_2021_2022.authentication.controller;
 
 
-import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
-import univ.m2.jee_2021_2022.authentication.models.AuthenticationResponse;
-import univ.m2.jee_2021_2022.authentication.services.UserService;
-import univ.m2.jee_2021_2022.authentication.util.JwtUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,9 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
+import univ.m2.jee_2021_2022.authentication.models.AuthenticationResponse;
+import univ.m2.jee_2021_2022.authentication.services.UserService;
+import univ.m2.jee_2021_2022.authentication.util.JwtUtil;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-public class FirstGameRessources {
+public class AuthenticationRessources {
 
 	public BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
 
@@ -46,10 +45,6 @@ public class FirstGameRessources {
 		
 		
 		try {
-			System.out.println(usermodel.getPassword());
-			System.out.println(auth.getPassword());
-			
-			//System.out.println(encoder.matches(usermodel.getPassword().toString(), auth.getPassword().toString()));
 
 			if(encoder.matches(usermodel.getPassword().toString(), auth.getPassword().toString())){
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usermodel.getEmail(), auth.getPassword()));
@@ -62,7 +57,6 @@ public class FirstGameRessources {
 			}
 		}
 		catch (BadCredentialsException e) {
-			//throw new Exception("Incorrect username or password", e);	
 			return new ResponseEntity("{\"information\" : \"Incorrect username or password\"}" ,HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity("{\"information\" : \"Incorrect username or password\"}" ,HttpStatus.BAD_REQUEST);
