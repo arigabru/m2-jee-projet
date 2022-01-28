@@ -25,7 +25,7 @@ public class BlackjackController {
     @Autowired
     private GamesServices gamesServices;
 
-    @PostMapping("/start")
+    @GetMapping("/start")
     @ResponseStatus(value = HttpStatus.OK)
     public void jouer(@RequestParam(value = "nbRound") int nbRound) {
         if (!isPlayable()){
