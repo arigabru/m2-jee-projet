@@ -23,6 +23,7 @@ public class BlackjackService {
     private ArrayList<CarteDTO> deckBot;
     private boolean coupPossibleJoueur;
 	private int sommeJoueur;
+	private int sommeBot;
 
     public BlackjackService() {
         paquet = new ArrayList<>();
@@ -40,6 +41,7 @@ public class BlackjackService {
         this.deckBot = new ArrayList<CarteDTO>();
         this.coupPossibleJoueur = true;
 		this.sommeJoueur = 0;
+		this.sommeBot = 0;
     }
 
     public void resetPaquet() {
@@ -55,6 +57,7 @@ public class BlackjackService {
         this.deckBot = new ArrayList<CarteDTO>();
         this.coupPossibleJoueur = true;
 		this.sommeJoueur = 0;
+		this.sommeBot = 0;
     }
 
     public void nouvellePartie(int nbRound) {
@@ -83,9 +86,6 @@ public class BlackjackService {
     }
 
     public boolean tirerCarteJoueur() {
-        if (this.deckJoueur.size() != 0) {
-            this.roundSuivant();
-        }
         this.deckJoueur.add(this.paquet.remove(0));
 
 		int somme = 0;
@@ -128,9 +128,12 @@ public class BlackjackService {
 			}
 			nbAs--;
 		}
-		if (somme < 17) this.tourBot();
+        
+		this.sommeBot = somme;
+
+		if (sommeBot < 17) this.tourBot();
 		else {
-			if (somme > 21 || somme > this.sommeJoueur) {
+			if (sommeBot > 21 || sommeBot > this.sommeJoueur) {
 				this.echecManche();
 			} else {
 				this.gainManche();
@@ -171,6 +174,10 @@ public class BlackjackService {
 	}
 
 	public int getSommeJoueur() {
+		return this.sommeJoueur;
+	}
+
+	public int getSommeBot() {
 		return this.sommeJoueur;
 	}
 }

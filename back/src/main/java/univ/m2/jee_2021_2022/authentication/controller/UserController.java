@@ -45,7 +45,7 @@ public class UserController {
         if (!validate(auth.getEmail().toString())){
             return new ResponseEntity("{\"information\" : \"mail not valid\"}" ,HttpStatus.BAD_REQUEST);
         }
-        if (!userService.findUserFromEmail(auth.getEmail())){
+        if (userService.findUserFromEmail(auth.getEmail())){
             return new ResponseEntity("{\"information\" : \"user already exist\"}" ,HttpStatus.BAD_REQUEST);   
         }
 
