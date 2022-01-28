@@ -1,16 +1,14 @@
 import { axiosInterceptor } from '../actions/axiosInterceptor';
 import axios from "axios";
 
-
 export function getCard() {
-    return axiosInterceptor.get("/bataille/tirer").then((response) => response.data);
+    return axiosInterceptor.get("/blackjack/tirer").then((response) => response.data);
 }
 
-export function jouer(signe) {
+export function startRound(round) {
     return axiosInterceptor
-        .post('http://localhost:6237/pfc/jouer?signe=' + signe, { 
+        .post('http://localhost:3000/blackjack/start?nbRound=' + round, { 
 
         })
         .then((response) => response.data)
 }
-

@@ -1,18 +1,18 @@
 import axios from "axios";
 
 export const axiosInterceptor = axios.create({
-    baseUrl: 'http://localhost:8080'
+    baseUrl: 'http://localhost:6237'
 });
 
 axiosInterceptor.interceptors.request.use(request => {
 
-    const storedJwt = localStorage.getItem('token')
+    const storedJwt = sessionStorage.getItem('token') 
     if (storedJwt) {
-        request.headers.common.Authorization = `Bearer ${storedJwt}`;
+        request.headers.common.Authorization = `Token ${storedJwt}`;
     }
     return request
 })
 
-axiosInterceptor.defaults.baseURL = 'http://localhost:8080'
+axiosInterceptor.defaults.baseURL = 'http://localhost:6237'
 
 export default axiosInterceptor;

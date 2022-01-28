@@ -15,7 +15,7 @@ import univ.m2.jee_2021_2022.authentication.services.GamesServices;
 import univ.m2.jee_2021_2022.blackjack.models.EtatBlackjackDTO;
 import univ.m2.jee_2021_2022.blackjack.services.BlackjackService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/blackjack")
 public class BlackjackController {
