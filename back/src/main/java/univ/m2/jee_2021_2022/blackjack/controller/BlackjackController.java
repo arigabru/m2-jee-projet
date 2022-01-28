@@ -65,9 +65,10 @@ public class BlackjackController {
                                                            blackjackService.getScoreJoueur(),
                                                            blackjackService.getScoreBot(),
                                                            deckJoueurName,
-                                                           deckJoueurName,
+                                                           deckBotName,
                                                            blackjackService.isCoupPossibleJoueur(), 
-                                                           blackjackService.getSommeJoueur());
+                                                           blackjackService.getSommeJoueur(),
+                                                           blackjackService.getSommeBot());
         return ResponseEntity.ok(etatPartie);
     }
 
@@ -95,11 +96,33 @@ public class BlackjackController {
                                                            blackjackService.getScoreJoueur(),
                                                            blackjackService.getScoreBot(),
                                                            deckJoueurName,
-                                                           deckJoueurName,
+                                                           deckBotName,
                                                            blackjackService.isCoupPossibleJoueur(),
-                                                           blackjackService.getSommeJoueur());
+                                                           blackjackService.getSommeJoueur(),
+                                                           blackjackService.getSommeBot());
         return ResponseEntity.ok(etatPartie);
     }
+
+    @GetMapping("/nextRound")
+    public ResponseEntity<EtatBlackjackDTO> roundSuivant() {
+        if (!isPlayable()){
+            return new ResponseEntity("{\"information\" : \"BlackJack not activated\"}" ,HttpStatus.BAD_REQUEST);
+        }
+        blackjackService.roundSuivant();
+        
+        EtatBlackjackDTO etatPartie = new EtatBlackjackDTO(blackjackService.getNbRound(),
+                                                           blackjackService.getRoundActuel(),
+                                                           blackjackService.getScoreJoueur(),
+                                                           blackjackService.getScoreBot(),
+                                                           new ArrayList<>(),
+                                                           new ArrayList<>(),
+                                                           blackjackService.isCoupPossibleJoueur(),
+                                                           blackjackService.getSommeJoueur(),
+                                                           blackjackService.getSommeBot());
+        return ResponseEntity.ok(etatPartie);
+    }
+
+
     public Boolean isPlayable(){
         return gamesServices.getInformationGames().getBlj();
     }

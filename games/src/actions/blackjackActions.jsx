@@ -16,3 +16,7 @@ export function startRound(round) {
         })
         .then((response) => response.data)
 }
+
+export function nextRound() {
+    return axiosInterceptor.get("/blackjack/nextRound").then((response) => response.data);
+}

@@ -23,6 +23,7 @@ public class BlackjackService {
     private ArrayList<CarteDTO> deckBot;
     private boolean coupPossibleJoueur;
 	private int sommeJoueur;
+	private int sommeBot;
 
     public BlackjackService() {
         paquet = new ArrayList<>();
@@ -40,6 +41,7 @@ public class BlackjackService {
         this.deckBot = new ArrayList<CarteDTO>();
         this.coupPossibleJoueur = true;
 		this.sommeJoueur = 0;
+		this.sommeBot = 0;
     }
 
     public void resetPaquet() {
@@ -53,8 +55,9 @@ public class BlackjackService {
 
         this.deckJoueur = new ArrayList<CarteDTO>();
         this.deckBot = new ArrayList<CarteDTO>();
-        this.coupPossibleJoueur = true;
+        this.coupPossibleJoueur = this.roundActuel <= this.nbRound;
 		this.sommeJoueur = 0;
+		this.sommeBot = 0;
     }
 
     public void nouvellePartie(int nbRound) {
@@ -71,41 +74,41 @@ public class BlackjackService {
         	this.resetPaquet();
             return true;
         }
+        this.coupPossibleJoueur = false;
         return false;
     }
 
-    public void gainManche() {
+    public void gainJoueur() {
         this.scoreJoueur++;
     }
 
-    public void echecManche() {
+    public void gainBot() {
         this.scoreBot++;
     }
 
     public boolean tirerCarteJoueur() {
-        if (this.deckJoueur.size() != 0) {
-            this.roundSuivant();
-        }
-        this.deckJoueur.add(this.paquet.remove(0));
+        if (this.coupPossibleJoueur) {
+            this.deckJoueur.add(this.paquet.remove(0));
 
-		int somme = 0;
-		int nbAs = 0;
-		for (CarteDTO c : this.deckJoueur) {
-			if (c.getValeur().getValeur() != 14)
-				somme += c.getValeur().getValeur();
-			else
-				nbAs++;
-		}
-		while (nbAs > 0) {
-			if (somme + 10 + (nbAs-1) <=21 ) {
-				somme += 10;
-			} else {
-				somme += 1;
-			}
-			nbAs--;
-		}
-		if (somme > 21) this.coupPossibleJoueur = false;
-		this.sommeJoueur = somme;
+            int somme = 0;
+            int nbAs = 0;
+            for (CarteDTO c : this.deckJoueur) {
+                if (c.getValeur().getValeur() != 14)
+                    somme += c.getValeur().getValeur();
+                else
+                    nbAs++;
+            }
+            while (nbAs > 0) {
+                if (somme + 10 + (nbAs-1) <=21 ) {
+                    somme += 10;
+                } else {
+                    somme += 1;
+                }
+                nbAs--;
+            }
+            if (somme > 21) this.coupPossibleJoueur = false;
+            this.sommeJoueur = somme;
+        }
 		return this.coupPossibleJoueur;
     }
 
@@ -128,14 +131,22 @@ public class BlackjackService {
 			}
 			nbAs--;
 		}
-		if (somme < 17) this.tourBot();
+        
+		this.sommeBot = somme;
+
+		if (sommeBot < 17) this.tourBot();
 		else {
-			if (somme > 21 || somme > this.sommeJoueur) {
-				this.echecManche();
-			} else {
-				this.gainManche();
-			}
+            attribuerPoint();
 		}
+    }
+
+    public void attribuerPoint() {
+        if((sommeJoueur > sommeBot || sommeBot > 21) && sommeJoueur <= 21) {
+            this.gainJoueur();
+        }
+        if ((sommeBot > sommeJoueur || sommeJoueur > 21) && sommeBot <= 21) {
+            this.gainBot();
+        }
     }
 
     public int getNbRound() {
@@ -172,5 +183,9 @@ public class BlackjackService {
 
 	public int getSommeJoueur() {
 		return this.sommeJoueur;
+	}
+
+	public int getSommeBot() {
+		return this.sommeBot;
 	}
 }

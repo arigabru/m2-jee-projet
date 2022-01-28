@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 import { Button } from "@mui/material";
 import { getCard } from '../actions/blackjackActions';
 import { startRound } from "../actions/blackjackActions";
+import { stopDraw } from "../actions/blackjackActions";
 import { useState } from "react";
 import Card from "react-free-playing-cards/lib/TcN"
 import DialogActions from '@mui/material/DialogActions';
@@ -15,6 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
+import { nextRound } from "../actions/blackjackActions";
 
 export default function BlackjackPage() {
 
@@ -33,8 +35,12 @@ export default function BlackjackPage() {
     const [gameButtonLabel, setGameButtonLabel] = useState("Jouer")
     const [scoreJoueur, setScoreJoueur] = useState(0)
     const [scoreBot, setScoreBot] = useState(0)
-    const[mainJoueur, setMainJoueur]=useState([])
-    const[mainBot, setMainBot]=useState([])
+    const [mainJoueur, setMainJoueur]=useState([])
+    const [mainBot, setMainBot]=useState([])
+    const [tirer, setTirer] = useState(false)
+    const [scoreMancheJoueur, setScoreMancheJoueur] = useState(0)
+    const [scoreMancheBot, setScoreMancheBot] = useState(0)
+    
 
     const navigate = useNavigate();
     const goToMenu = () => {
@@ -54,12 +60,39 @@ export default function BlackjackPage() {
         setRoundLost(0)
         setRoundWon(0)
         setCurrentRound(1)
+        setTirer(false)
+        setMainJoueur=[]
+        setMainBot=[]
+        setScoreBot(0)
+        setScoreJoueur(0)
+    }
+
+    const nextRoundInGame = () => {
+        setTirer(false)
+        
     }
 
     const fromEndToRestart = () => {
         handleClose()
         setOpen(true)
-        
+            
+    }
+
+    const stopDrawCards = () => {
+        stopDraw().then((response) => {
+            console.log(response)
+            setMainBot(response.deckBot)
+            setTirer(true)
+            setScoreBot(response.sommeBot)
+            nextRound().then((response) => {
+                if(response.roundActuel <= nbRounds){
+                    setCurrentRound(response.roundActuel)
+                    setRoundWon(response.scoreJoueur)
+                    setRoundLost(response.scoreBot)
+                    nextRoundInGame()
+                }  
+            })
+        })
     }
 
     const getRandCard = () => {
@@ -67,18 +100,28 @@ export default function BlackjackPage() {
         setBack(false)
         getCard().then((response) => {
 
-            /*
-            setPlayerCard(response.carteJoueur)
-            setBotCard(response.carteBot) 
-            setnbRounds(response.nbRound)
-            setCurrentRound(currentRound+1)
-            setRoundWon(response.scoreJoueur)
-            setRoundLost(response.scoreBot)
-            */
             
+            setScoreJoueur(response.sommeJoueur)
             setMainJoueur(response.deckJoueur)
-            //console.log(mainJoueur)
+            console.log(mainJoueur)
             console.log(response)
+            setScoreBot(0)
+            if(response.sommeJoueur > 21){
+                stopDraw().then((response) => {
+                    console.log(response)
+                    setMainBot(response.deckBot)
+                    setTirer(true)
+                    setScoreBot(response.sommeBot)
+                    nextRound().then((response) => {
+                        if(response.roundActuel <= nbRounds){
+                            setCurrentRound(response.roundActuel)
+                            setRoundWon(response.scoreJoueur)
+                            setRoundLost(response.scoreBot)
+                            nextRoundInGame()
+                        }  
+                    })
+                })
+            }
 
             if(response.roundActuel > response.nbRound)
             {
@@ -95,8 +138,7 @@ export default function BlackjackPage() {
 
                 setDialogEndGameOpen(true)
             }
-                
-               
+
         })
     }
 
@@ -111,8 +153,6 @@ export default function BlackjackPage() {
                 </Grid>
             </AppBar>
 
-            <Button onClick={() =>{getRandCard()}}> Tirer </Button>
-
             <Box sx={{ pt: 10 }} >
             <Grid container>
                     <Grid item md={3}>
@@ -122,7 +162,10 @@ export default function BlackjackPage() {
                         <Typography variant="h5" sx={{mt:2}}> Score : {scoreJoueur} </Typography>
                     </Grid>
                     <Grid item md={3}>
-                        <Card card={playerCard} height="200px" back={isBacked}></Card>
+                        {mainJoueur.map((carte, i) => (
+                                <Card card={carte} height="100px" back={isBacked}></Card>
+                        ))}
+                        
                     </Grid>
                     <Grid item md={3}>
                     </Grid>
@@ -136,7 +179,10 @@ export default function BlackjackPage() {
                         <Typography variant="h5" sx={{mt:2}}> Score : {scoreBot} </Typography>
                     </Grid> 
                     <Grid item md={3}>
-                        <Card card={botCard} height="200px" back={isBacked}></Card>
+                        {mainBot.map((carte, i) => (
+                                <Card card={carte} height="100px" back={isBacked}></Card>
+                        ))}
+                        
                     </Grid> 
                     <Grid item md={3}>
                     </Grid>
@@ -146,9 +192,12 @@ export default function BlackjackPage() {
                     <Grid item md={3}>
                     </Grid>    
                     <Grid item md={6}>
-                        <Button variant="contained" onClick={() =>{getRandCard()}}>
+                        <Button variant="contained" disabled={tirer} onClick={() =>{getRandCard()}}>
                             Tirer
-                        </Button>                    
+                        </Button> 
+                        <Button variant="contained" disabled={tirer} onClick={() =>{stopDrawCards()}}>
+                            Stop
+                        </Button>                        
                     </Grid> 
                     <Grid item md={3}>
                     </Grid>
