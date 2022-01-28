@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import univ.m2.jee_2021_2022.authentication.services.GamesServices;
@@ -26,6 +27,19 @@ public class PFCController {
     @Autowired
     private GamesServices gamesServices;
 
+    @GetMapping("/start")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ResponseEntity<?> jouer(@RequestParam(value = "nbRound") String nbRound) {
+        
+        if (!isPlayable()){
+            return new ResponseEntity("{\"information\" : \"pfc not activated\"}" ,HttpStatus.BAD_REQUEST);
+        }
+
+        pfcService.nouvellePartie(Integer.parseInt(nbRound));
+        return new ResponseEntity("{\"information\" : \"Start battle\"}" ,HttpStatus.OK);
+       
+    }
+
     @GetMapping("/jouer")
     public ResponseEntity<EtatPfcDTO> jouer(@RequestParam(value = "signe") Main mainJoueur) {
         if (!isPlayable()){
@@ -33,7 +47,13 @@ public class PFCController {
         }
         Main mainBot = pfcService.signeAleatoire();
         int rapport = pfcService.comparer(mainJoueur, mainBot);
-        EtatPfcDTO resultat = new EtatPfcDTO(mainJoueur, mainBot, rapport);
+        EtatPfcDTO resultat = new EtatPfcDTO(mainJoueur,
+                                             mainBot,
+                                             rapport,
+                                             pfcService.getScoreJoueur(),
+                                             pfcService.getScoreBot(),
+                                             pfcService.getRoundActuel(),
+                                             pfcService.getNbRound());
         return ResponseEntity.ok(resultat);
     }
 

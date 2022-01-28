@@ -7,11 +7,19 @@ public class EtatPfcDTO {
     private String mainJoueur;
     private String mainBot;
     private int rapport;
+    private int scoreJoueur;
+    private int scoreBot;
+    private int roundActuel;
+    private int nbRound;
 
-    public EtatPfcDTO(Main carteJoueur, Main carteBot, int rapport) {
+    public EtatPfcDTO(Main carteJoueur, Main carteBot, int rapport, int scoreJoueur, int scoreBot, int roundActuel, int nbRound) {
         this.mainJoueur = carteJoueur.name();
         this.mainBot = carteBot.name();
         this.rapport = rapport;
+        this.scoreJoueur = scoreJoueur;
+        this.scoreBot = scoreBot;
+        this.roundActuel = roundActuel;
+        this.nbRound = nbRound;
     }
 
     public String getMainJoueur() {
@@ -24,5 +32,21 @@ public class EtatPfcDTO {
 
     public int getRapport() {
         return this.rapport;
+    }
+
+    public int getScoreJoueur() {
+        return this.scoreJoueur;
+    }
+
+    public int getScoreBot() {
+        return this.scoreBot;
+    }
+
+    public int getRoundActuel() {
+        return this.roundActuel;
+    }
+
+    public int getNbRound() {
+        return this.nbRound;
     }
 }
