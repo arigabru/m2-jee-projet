@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FirstGameRessources {
 
+	public BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -36,24 +38,39 @@ public class FirstGameRessources {
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest usermodel) throws Exception {
 
+		if (!userDetailsService.findUserFromEmail(usermodel.getEmail())){
+            return new ResponseEntity("{\"information\" : \"user not exist\"}" ,HttpStatus.NOT_FOUND);
+        } 
 		AuthenticationRequest auth =  userDetailsService.getOneUserByEmail(usermodel.getEmail());
 		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+		
 		
 		try {
-			if(encoder.matches(usermodel.getPassword(), auth.getPassword())){
+			System.out.println(usermodel.getPassword());
+			System.out.println(auth.getPassword());
+			
+			//System.out.println(encoder.matches(usermodel.getPassword().toString(), auth.getPassword().toString()));
+
+			if(encoder.matches(usermodel.getPassword().toString(), auth.getPassword().toString())){
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usermodel.getEmail(), auth.getPassword()));
+				final UserDetails userDetails = userDetailsService.loadUserByUsername(usermodel.getEmail());
+				final String jwt = jwtTokenUtil.generateToken(userDetails);
+
+				return ResponseEntity.ok(new AuthenticationResponse(jwt, auth.getPseudo(), auth.getEmail()));
+			}else {
+				new ResponseEntity("{\"information\" : \"Incorrect username or password\"}" ,HttpStatus.BAD_REQUEST);
 			}
 		}
 		catch (BadCredentialsException e) {
 			//throw new Exception("Incorrect username or password", e);	
 			return new ResponseEntity("{\"information\" : \"Incorrect username or password\"}" ,HttpStatus.BAD_REQUEST);
 		}
+		return new ResponseEntity("{\"information\" : \"Incorrect username or password\"}" ,HttpStatus.BAD_REQUEST);
 
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(usermodel.getEmail());
-		final String jwt = jwtTokenUtil.generateToken(userDetails);
-
-		return ResponseEntity.ok(new AuthenticationResponse(jwt, auth.getPseudo(), auth.getEmail()));
+		
+	}
+	public BCryptPasswordEncoder getEncoder() {
+		return encoder;
 	}
     
 }

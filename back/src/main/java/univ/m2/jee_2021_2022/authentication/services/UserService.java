@@ -7,6 +7,7 @@ import javax.security.auth.message.AuthStatus;
 
 import univ.m2.jee_2021_2022.authentication.Repository.UserRepository;
 import univ.m2.jee_2021_2022.authentication.models.AuthenticationRequest;
+import univ.m2.jee_2021_2022.authentication.controller.FirstGameRessources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,7 @@ public class UserService implements UserDetailsService {
     public AuthenticationRequest addUser(AuthenticationRequest auth) {
         
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-        String result = encoder.encode("myPassword");
+        String result = encoder.encode(auth.getPassword());
         //assertTrue(encoder.matches("myPassword", result));
         auth.setPassword(result);
         return userRepository.insert(auth);
