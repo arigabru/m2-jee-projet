@@ -3,12 +3,12 @@ package univ.m2.jee_2021_2022.pfc.models;
 /**
  * Constitue l'information envoyé au client
  */
-public class ResultatPFCDTO {
+public class EtatPfcDTO {
     private String mainJoueur;
     private String mainBot;
     private int rapport;
 
-    public ResultatPFCDTO(Main carteJoueur, Main carteBot, int rapport) {
+    public EtatPfcDTO(Main carteJoueur, Main carteBot, int rapport) {
         this.mainJoueur = carteJoueur.name();
         this.mainBot = carteBot.name();
         this.rapport = rapport;

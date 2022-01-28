@@ -34,35 +34,39 @@ public class UserController {
 
     @GetMapping(value="/api/users")
     public ResponseEntity<List<AuthenticationRequest>> getUser(){
-
         return ResponseEntity.ok(userService.getUsers());
     }
     @PostMapping(value="/api/newuser")
     public ResponseEntity<?> createNewUser(@RequestBody AuthenticationRequest auth){
 
         if (!auth.getPassword().toString().matches("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$")){
-            System.out.println("le mot de passe contient pas ce qu'il faut");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("{\"information\" : \"password not valid\"}" ,HttpStatus.BAD_REQUEST);
         }
         if (!validate(auth.getEmail().toString())){
-            System.out.println("le mail n'est pas un mail");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("{\"information\" : \"mail not valid\"}" ,HttpStatus.BAD_REQUEST);
         }
         if (!userService.findUserFromEmail(auth.getEmail())){
-            return ResponseEntity.ok(userService.addUser(new AuthenticationRequest(auth.getPseudo(), auth.getPassword(), auth.getEmail(), false)));
+            return new ResponseEntity("{\"information\" : \"user already exist\"}" ,HttpStatus.BAD_REQUEST);   
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.ok(userService.addUser(new AuthenticationRequest(auth.getPseudo(), auth.getPassword(), auth.getEmail(), false)));
         
     }
     
     @PostMapping(value="/api/users")
     public ResponseEntity<?> createUser(@RequestBody AuthenticationRequest auth){
 
-        System.out.println ("L'utilisateur existe ? "+userService.getOneUserByEmail(auth.getEmail()).equals(null));
-        if (!userService.findUserFromEmail(auth.getEmail())){
-            return ResponseEntity.ok(userService.addUser(auth));
+        if (!auth.getPassword().toString().matches("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$")){
+            return new ResponseEntity("{\"information\" : \"password not valid\"}" ,HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!validate(auth.getEmail().toString())){
+            return new ResponseEntity("{\"information\" : \"mail not valid\"}" ,HttpStatus.BAD_REQUEST);
+        }
+        if (userService.findUserFromEmail(auth.getEmail())){
+            return new ResponseEntity("{\"information\" : \"user already exist\"}" ,HttpStatus.BAD_REQUEST);
+        }
+    
+        return ResponseEntity.ok(userService.addUser(auth));
         
     }
 
@@ -70,7 +74,12 @@ public class UserController {
     public ResponseEntity<AuthenticationRequest> getUserByMail(@RequestParam(value ="mail") String mail){
 
         AuthenticationRequest user = userService.getOneUserByEmail(mail);
+        if (user==null){
+            return new ResponseEntity("{\"information\" : \"user not exist\"}" ,HttpStatus.NOT_FOUND);
+        }
+        //retrait des mots de passe  
         user.setPassword(null);
+
         return ResponseEntity.ok(user);
     }
 
@@ -78,7 +87,7 @@ public class UserController {
     public ResponseEntity<?> deleteUserByMail(@RequestParam(value ="mail") String mail){
         System.out.println(mail);
         if (userService.getOneUserByEmail(mail) == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("{\"information\" : \"user not exist\"}" ,HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(userService.deleteUserByMail(mail));
     }

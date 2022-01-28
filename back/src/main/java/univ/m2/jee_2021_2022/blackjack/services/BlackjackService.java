@@ -23,7 +23,6 @@ public class BlackjackService {
     private ArrayList<CarteDTO> deckBot;
     private boolean coupPossibleJoueur;
 	private int sommeJoueur;
-    // private boolean coupPossibleBot;
 
     public BlackjackService() {
         paquet = new ArrayList<>();
@@ -41,7 +40,6 @@ public class BlackjackService {
         this.deckBot = new ArrayList<CarteDTO>();
         this.coupPossibleJoueur = true;
 		this.sommeJoueur = 0;
-        // this.coupPossibleBot = true;
     }
 
     public void resetPaquet() {
@@ -57,7 +55,6 @@ public class BlackjackService {
         this.deckBot = new ArrayList<CarteDTO>();
         this.coupPossibleJoueur = true;
 		this.sommeJoueur = 0;
-        // this.coupPossibleBot = true;
     }
 
     public void nouvellePartie(int nbRound) {
@@ -81,12 +78,8 @@ public class BlackjackService {
         this.scoreJoueur++;
     }
 
-    public void echechManche() {
+    public void echecManche() {
         this.scoreBot++;
-    }
-
-    public CarteDTO tirerCarte() {
-        return this.paquet.remove(0);
     }
 
     public boolean tirerCarteJoueur() {
@@ -135,15 +128,11 @@ public class BlackjackService {
 		if (somme < 17) this.tourBot();
 		else {
 			if (somme > 21 || somme > this.sommeJoueur) {
-				this.echechManche();
+				this.echecManche();
 			} else {
 				this.gainManche();
 			}
 		}
-    }
-
-    public int comparerCarte(CarteDTO c1, CarteDTO c2) {
-        return c1.getValeur().comparer(c2.getValeur());
     }
 
     public int getNbRound() {

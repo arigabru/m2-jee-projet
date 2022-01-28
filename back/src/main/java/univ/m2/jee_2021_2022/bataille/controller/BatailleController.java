@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import univ.m2.jee_2021_2022.authentication.services.GamesServices;
-import univ.m2.jee_2021_2022.bataille.models.Carte;
-import univ.m2.jee_2021_2022.bataille.models.EtatPartieDTO;
+import univ.m2.jee_2021_2022.bataille.models.CarteDTO;
+import univ.m2.jee_2021_2022.bataille.models.EtatBatailleDTO;
 import univ.m2.jee_2021_2022.bataille.services.BatailleService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -29,31 +29,31 @@ public class BatailleController {
 
     @GetMapping("/start")
     @ResponseStatus(value = HttpStatus.OK)
-    public void jouer(@RequestParam(value = "nbRound") String nbRound) {
+    public ResponseEntity<?> jouer(@RequestParam(value = "nbRound") String nbRound) {
         
         if (!isPlayable()){
-            ResponseEntity.notFound();
+            return new ResponseEntity("{\"information\" : \"battle not activated\"}" ,HttpStatus.BAD_REQUEST);
         }
         
         batailleService.resetPaquet();
         batailleService.nouvellePartie(Integer.parseInt(nbRound));
-        
+        return new ResponseEntity("{\"information\" : \"Start battle\"}" ,HttpStatus.OK);
        
     }
 
     @GetMapping("/tirer")
-    public ResponseEntity<EtatPartieDTO> tirer() {
+    public ResponseEntity<EtatBatailleDTO> tirer() {
 
         if (!isPlayable()){
-            ResponseEntity.notFound();
+            return new ResponseEntity("{\"information\" : \"battle not activated\"}" ,HttpStatus.BAD_REQUEST);
         }
         if (batailleService.roundSuivant()) {
-            Carte c1 = batailleService.tirerCarte();
-            Carte c2 = batailleService.tirerCarte();
+            CarteDTO c1 = batailleService.tirerCarte();
+            CarteDTO c2 = batailleService.tirerCarte();
             int rapport = batailleService.comparerCarte(c1, c2);
             if (rapport > 0) batailleService.gainManche();
-            if (rapport < 0) batailleService.echechManche();
-            EtatPartieDTO etatPartie = new EtatPartieDTO(batailleService.getNbRound(),
+            if (rapport < 0) batailleService.echecManche();
+            EtatBatailleDTO etatPartie = new EtatBatailleDTO(batailleService.getNbRound(),
                                                    batailleService.getRoundActuel(),
                                                    batailleService.getScoreJoueur(),
                                                    batailleService.getScoreBot(),
@@ -62,7 +62,7 @@ public class BatailleController {
                                                    rapport);
             return ResponseEntity.ok(etatPartie);
         }
-        return ResponseEntity.ok(null);
+        return new ResponseEntity("{\"information\" : \"error you can't draw anymore\"}" ,HttpStatus.BAD_REQUEST);
     }
 
     public Boolean isPlayable(){

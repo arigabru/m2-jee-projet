@@ -25,11 +25,8 @@ public class Jee20212022Application {
      CommandLineRunner run(UserService userService, GamesServices gamesServices){
          return  args -> {
             //gamesServices.createGamesServices(new Games(1,true, true, true));
-            //userService.addUser(new AuthenticationRequest("professor", "1234","professor@gmail.com", true));
-            // userService.addUser(new AuthenticationRequest("titouan", "1234","titouan@gmail.com", true));
-            // userService.addUser(new AuthenticationRequest("eden", "1234", "eden@gmail.com", false));
-            // userService.addUser(new AuthenticationRequest("bruno", "1234", "bruno@gmail.com", false));
-
+            //userService.addUser(new AuthenticationRequest("professor", "MotDePasse1","professor@gmail.com", true));
+            //userService.addUser(new AuthenticationRequest("bruno", "MotDePasse2", "bruno@gmail.com", false));
          };
      }
 }

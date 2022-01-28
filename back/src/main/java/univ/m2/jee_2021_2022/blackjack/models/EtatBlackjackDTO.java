@@ -15,7 +15,7 @@ public class EtatBlackjackDTO {
     private boolean coupPossibleJoueur;
 	private int sommeJoueur;
 
-    public EtatBlackjackDTO(int nbRound, int roundActuel, int scoreJoueur, int scoreBot, ArrayList<CarteDTO> deckJoueur, ArrayList<CarteDTO> deckBot, boolean couoPossibleJoueur, int sommeJoueur) {
+    public EtatBlackjackDTO(int nbRound, int roundActuel, int scoreJoueur, int scoreBot, ArrayList<CarteDTO> deckJoueur, ArrayList<CarteDTO> deckBot, boolean coupPossibleJoueur, int sommeJoueur) {
         this.nbRound = nbRound;
         this.roundActuel = roundActuel;
         this.scoreJoueur = scoreJoueur;
@@ -35,7 +35,7 @@ public class EtatBlackjackDTO {
     }
 
     public int getScoreJoueur() {
-        return this.sommeJoueur;
+        return this.scoreJoueur;
     }
 
     public int getScoreBot() {
