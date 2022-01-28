@@ -10,7 +10,9 @@ import univ.m2.jee_2021_2022.authentication.services.GamesServices;
 import univ.m2.jee_2021_2022.authentication.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +33,7 @@ public class UserController {
 
     @Autowired 
     private GamesServices gamesServices ;
+  
 
     @GetMapping(value="/api/users")
     public ResponseEntity<List<AuthenticationRequest>> getUser(){
@@ -69,12 +72,25 @@ public class UserController {
         return ResponseEntity.ok(userService.addUser(auth));
         
     }
+    @GetMapping(value="/api/user/admin")
+    public ResponseEntity<Boolean> getAdminByMail(@RequestParam(value ="mail") String mail){
+
+       
+        if (!userService.findUserFromEmail(mail)){
+            return new ResponseEntity("{\"information\" : \"user not exist\"}" ,HttpStatus.NOT_FOUND);
+        } 
+        AuthenticationRequest user = userService.getOneUserByEmail(mail);
+        //retrait des mots de passe  
+        return ResponseEntity.ok(user.getAdministrator());
+    }
+
+        
 
     @GetMapping(value="/api/users/mail")
     public ResponseEntity<AuthenticationRequest> getUserByMail(@RequestParam(value ="mail") String mail){
 
         AuthenticationRequest user = userService.getOneUserByEmail(mail);
-        if (user==null){
+        if (!userService.findUserFromEmail(mail)){
             return new ResponseEntity("{\"information\" : \"user not exist\"}" ,HttpStatus.NOT_FOUND);
         }
         //retrait des mots de passe  
@@ -86,7 +102,7 @@ public class UserController {
     @DeleteMapping(value="/api/users/delete")
     public ResponseEntity<?> deleteUserByMail(@RequestParam(value ="mail") String mail){
         System.out.println(mail);
-        if (userService.getOneUserByEmail(mail) == null){
+        if (!userService.findUserFromEmail(mail)){
             return new ResponseEntity("{\"information\" : \"user not exist\"}" ,HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(userService.deleteUserByMail(mail));
